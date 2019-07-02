@@ -18,6 +18,8 @@ public class Basket {
 
     }
 
-    public void deleteProduct
+    public void deleteProduct(){
+
+    }
 
 }

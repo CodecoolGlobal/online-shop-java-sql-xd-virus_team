@@ -3,7 +3,7 @@ package com.codecool.xdvirus.onlineShop;
 
 import java.sql.*;
 
-public class databaseConnector {
+public class DatabaseConnector {
     public static void main( String args[] ) {
         Connection c = null;
         Statement stmt = null;
