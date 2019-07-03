@@ -1,4 +1,5 @@
-package com.codecool.xdvirus.onlineShop;
+package com.codecool.xdvirus.onlineShop.model;
+
 import java.util.List;
 
 public class Category {
