@@ -1,4 +1,4 @@
-package com.codecool.xdvirus.onlineShop;
+package com.codecool.xdvirus.onlineShop.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;

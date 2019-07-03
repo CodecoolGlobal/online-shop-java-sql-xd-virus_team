@@ -1,4 +1,6 @@
-package com.codecool.xdvirus.onlineShop;
+package com.codecool.xdvirus.onlineShop.model;
+
+import com.codecool.xdvirus.onlineShop.model.Category;
 
 public class Product {
 
