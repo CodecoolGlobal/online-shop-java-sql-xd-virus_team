@@ -6,19 +6,23 @@ public class Category {
 
     private int id;
     private String name;
-    private boolean isAvailable;
-    private List<Product> products;
 
-    public String Category() {
-
-        return this.name;
+    public Category(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public List<Product> getProducts() {
-
-        return products;
+    public int getId() {
+        return id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    @Override
+    public String toString() {
+        return this.id + " " + this.name;
+    }
 }
 
