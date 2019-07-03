@@ -1,9 +1,37 @@
 package com.codecool.xdvirus.onlineShop;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-/*
+import java.util.List;
+
 public class ProductIterator implements Iterator {
-//TODO
+
+
+    private int index;
+    List<Product> productsList;
+
+    public ProductIterator(List<Product> list){
+        this.productsList = list;
+    }
+
+
+    @Override
+    public boolean hasNext() {
+        if (index < productsList.size()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Object next() {
+        return productsList.get(index++);
+    }
+
+    @Override
+    public void remove() {
+        this.index = 0;
+    }
 }
-*/
+
 
