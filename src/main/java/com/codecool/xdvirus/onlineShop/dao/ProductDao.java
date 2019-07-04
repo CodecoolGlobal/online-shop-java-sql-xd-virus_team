@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDao<r> implements Dao<Product> {
+public class ProductDao implements Dao<Product> {
 
 
     @Override
