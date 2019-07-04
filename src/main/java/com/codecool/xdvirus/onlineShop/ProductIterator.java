@@ -1,5 +1,7 @@
 package com.codecool.xdvirus.onlineShop;
 
+import com.codecool.xdvirus.onlineShop.model.Product;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
