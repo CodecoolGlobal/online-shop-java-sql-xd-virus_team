@@ -56,4 +56,8 @@ public class Basket {
         return quantity_of_product;
     }
 
+    @Override
+    public String toString() {
+        return "Id: " + id + " ,prod_id: " + product_id + " ,quantity: " + quantity_of_product + " ,order id: " + order_id;
+    }
 }
