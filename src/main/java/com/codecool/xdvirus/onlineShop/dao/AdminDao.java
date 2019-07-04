@@ -15,14 +15,16 @@ public class AdminDao implements Dao<Admin> {
         ResultSet resultSet = new Sql().selectSql("SELECT * FROM admins");
         List<Admin> categoryList = new ArrayList<>();
         while (resultSet.next()) {
-            categoryList.add(new Admin(resultSet.getInt("id"), resultSet.getString("name")));
+            categoryList.add(new Admin(resultSet.getInt("id"),
+                    resultSet.getString("name")));
         }
         return categoryList;
     }
 
     @Override
     public void createContent(Admin object) throws SQLException {
-        PreparedStatement preparedStatement = new Sql().prepareSql("INSERT INTO admins (id, name) values(?, ?)");
+        PreparedStatement preparedStatement = new Sql().prepareSql("INSERT INTO admins (id, name) " +
+                "values(?, ?)");
         preparedStatement.setInt(1, object.getId());
         preparedStatement.setString(2,object.getName());
         preparedStatement.executeUpdate();
@@ -31,7 +33,9 @@ public class AdminDao implements Dao<Admin> {
 
     @Override
     public void updateContent(Admin object) throws SQLException {
-        PreparedStatement preparedStatement = new Sql().prepareSql("UPDATE admins SET name = ? WHERE id = ?");
+        PreparedStatement preparedStatement = new Sql().prepareSql("UPDATE admins " +
+                "SET name = ? " +
+                "WHERE id = ?");
         preparedStatement.setString(1,object.getName());
         preparedStatement.setInt(2, object.getId());
         preparedStatement.executeUpdate();
@@ -40,7 +44,8 @@ public class AdminDao implements Dao<Admin> {
 
     @Override
     public void removeContent(int id) throws SQLException {
-        PreparedStatement preparedStatement = new Sql().prepareSql("DELETE FROM admins WHERE id = ?");
+        PreparedStatement preparedStatement = new Sql().prepareSql("DELETE FROM admins " +
+                "WHERE id = ?");
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
         preparedStatement.close();
