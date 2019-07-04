@@ -1,11 +1,13 @@
 package com.codecool.xdvirus.onlineShop.dao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Connector {
     private Connection connection = null;
 
-    public Connection connection() {
+    Connection connection() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/OnlineShop");
@@ -15,7 +17,6 @@ public class Connector {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Opened database successfully");
         return connection;
     }
     public void disconnection(){
