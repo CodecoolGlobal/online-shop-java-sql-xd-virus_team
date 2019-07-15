@@ -1,12 +1,11 @@
 package com.codecool.xdvirus.onlineShop.dao.intefaces;
 
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface Dao <T> {
-    List<T> readContent() throws SQLException;
-    void createContent(T object) throws SQLException;
-    void updateContent(T object) throws SQLException;
-    void removeContent(int id) throws SQLException;
+    List<T> readContent(); //nie może obśługiwać wyjątku tylko dla sql, tylko ma być do kazdego typu bazy danych CSV itp
+    void createContent(T object);
+    void updateContent(T object);
+    void removeContent(int id);
 }

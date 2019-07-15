@@ -4,15 +4,18 @@ import java.sql.*;
 
 
 public class Sql {
-    Connection connection;
+    private Connector connector;
     PreparedStatement preparedStatement;
 
     public Sql() {
-        connection = new Connector().connection(); //add connection to this class
+        connector = new Connector(); //add connection to this class
         preparedStatement = null;
     }
+    public void disconnectSql(){
+        connector.disconnection();
+    }
     public PreparedStatement prepareSql(String sql) throws SQLException {
-        this.preparedStatement = connection.prepareStatement(sql);
+        this.preparedStatement = connector.connection().prepareStatement(sql);
         return preparedStatement;
     }
     public ResultSet selectSql(String sql){
