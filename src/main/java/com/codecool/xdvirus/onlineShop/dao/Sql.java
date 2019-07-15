@@ -8,7 +8,7 @@ public class Sql {
     PreparedStatement preparedStatement;
 
     public Sql() {
-        connection = new Connector().connection();
+        connection = new Connector().connection(); //add connection to this class
         preparedStatement = null;
     }
     public PreparedStatement prepareSql(String sql) throws SQLException {

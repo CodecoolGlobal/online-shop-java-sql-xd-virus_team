@@ -18,9 +18,10 @@ public class LoginController {
             for (User user : new UsersDao().readContent()) {
                 if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                     System.out.println("You logged succesfully!");
+                } else {
+                    System.out.println("Wrong login or password.");
                 }
             }
-            System.out.println("Wrong login or password.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

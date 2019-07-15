@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Connector {
     private Connection connection = null;
 
-    Connection connection() {
+    Connection connection() { //exception try/catch when to use it
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/OnlineShop");
