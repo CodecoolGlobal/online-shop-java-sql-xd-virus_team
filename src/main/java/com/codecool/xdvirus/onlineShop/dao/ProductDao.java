@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDao<r> implements Dao<Product> {
+public class ProductDao implements Dao<Product> {
 
 
     @Override
@@ -22,7 +22,7 @@ public class ProductDao<r> implements Dao<Product> {
                     resultSet.getString("name"),
                     resultSet.getDouble("price"),
                     resultSet.getInt("amount"),
-                    resultSet.getBoolean("isAvailable"),
+                    resultSet.getBoolean("availibility"),
                     resultSet.getInt("category")));
         }
         return productList;
