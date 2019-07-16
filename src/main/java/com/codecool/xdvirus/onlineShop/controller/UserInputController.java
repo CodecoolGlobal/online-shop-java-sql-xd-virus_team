@@ -11,4 +11,9 @@ import java.io.InputStreamReader;
         System.out.println(keyString);
         return new BufferedReader(new InputStreamReader(System.in)).readLine();
     }
+    static Integer integerUserInput(String keyInteger) throws IOException{
+        System.out.println(keyInteger);
+        return new BufferedReader(new InputStreamReader(System.in)).read();
+
+    }
 }
