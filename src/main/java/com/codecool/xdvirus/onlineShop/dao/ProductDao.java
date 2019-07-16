@@ -20,11 +20,11 @@ public class ProductDao implements Dao<Product> {
             ResultSet resultSet = sql.selectSql("SELECT * FROM product");
             while (resultSet.next()) {
                 productList.add(new Product(
-                        resultSet.getInt("id_product"),
+                        //resultSet.getInt("id_product"),
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("amount"),
-                        resultSet.getBoolean("availibility"),
+                        resultSet.getString("availibility"),
                         resultSet.getInt("category")));
             }
         } catch (SQLException e) {
@@ -38,14 +38,13 @@ public class ProductDao implements Dao<Product> {
     public void createContent(Product object) {
         sql = new Sql();
         try {
-            PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO product (id_product, " +
-                    "name, price, amount, isAvailable, category) values (?,?,?,?,?,?)");
-            preparedStatement.setInt(1, object.getId());
-            preparedStatement.setString(2, object.getName());
-            preparedStatement.setDouble(3, object.getPrice());
-            preparedStatement.setInt(4, object.getAmount());
-            preparedStatement.setBoolean(5, object.isAvailable());
-            preparedStatement.setInt(6, object.getCategory());
+            PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO product (name, price, amount, availibility, category) values (?,?,?,?,?)");
+            //preparedStatement.setInt(1, object.getId());
+            preparedStatement.setString(1, object.getName());
+            preparedStatement.setDouble(2, object.getPrice());
+            preparedStatement.setInt(3, object.getAmount());
+            preparedStatement.setString(4, object.isAvailable());
+            preparedStatement.setInt(5, object.getCategory());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             sql.disconnectSql();
@@ -62,13 +61,13 @@ public class ProductDao implements Dao<Product> {
             PreparedStatement preparedStatement = sql.prepareSql("UPDATE product SET name = ?, " +
                     "price = ?, " +
                     "amount = ?, " +
-                    "isAvailable = ?, " +
+                    "availibility = ?, " +
                     "category = ? " +
                     "WHERE id_product = ?");
             preparedStatement.setString(1, object.getName());
             preparedStatement.setDouble(2, object.getPrice());
             preparedStatement.setInt(3, object.getAmount());
-            preparedStatement.setBoolean(4, object.isAvailable());
+            preparedStatement.setString(4, object.isAvailable());
             preparedStatement.setInt(5, object.getCategory());
             preparedStatement.setInt(6, object.getId());
             preparedStatement.executeUpdate();
