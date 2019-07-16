@@ -10,42 +10,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDao implements Dao<Category> {
-
+    Sql sql;
 
     @Override
-    public List<Category> readContent() throws SQLException {
-        ResultSet resultSet = new Sql().selectSql("SELECT * FROM categories");
+    public List<Category> readContent() {
         List<Category> categoryList = new ArrayList<>();
-        while (resultSet.next()) {
-            categoryList.add(new Category(resultSet.getInt("id"), resultSet.getString("name")));
+        sql = new Sql();
+        try {
+            ResultSet resultSet = sql.selectSql("SELECT * FROM category");
+            while (resultSet.next()) {
+                categoryList.add(new Category(resultSet.getInt("id_category"), resultSet.getString("name")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        sql.disconnectSql();
         return categoryList;
     }
 
     @Override
-    public void createContent(Category object) throws SQLException {
-        PreparedStatement preparedStatement = new Sql().prepareSql("INSERT INTO categories (id, name) values(?, ?)");
-        preparedStatement.setInt(1, object.getId());
-        preparedStatement.setString(2,object.getName());
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+    public void createContent(Category object) {
+        sql = new Sql();
+        try {
+            PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO category (id_category, name) values(?, ?)");
+            preparedStatement.setInt(1, object.getId());
+            preparedStatement.setString(2, object.getName());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            sql.disconnectSql();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void updateContent(Category object) throws SQLException {
-        PreparedStatement preparedStatement = new Sql().prepareSql("UPDATE categories SET name = ? WHERE id = ?");
-        preparedStatement.setString(1,object.getName());
-        preparedStatement.setInt(2, object.getId());
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+    public void updateContent(Category object) {
+        sql = new Sql();
+        try {
+            PreparedStatement preparedStatement = sql.prepareSql("UPDATE category SET name = ? WHERE id_category = ?");
+            preparedStatement.setString(1, object.getName());
+            preparedStatement.setInt(2, object.getId());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            sql.disconnectSql();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void removeContent(int id) throws SQLException {
-        PreparedStatement preparedStatement = new Sql().prepareSql("DELETE FROM categories WHERE id = ?");
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+    public void removeContent(int id) {
+        sql = new Sql();
+        try {
+            PreparedStatement preparedStatement = sql.prepareSql("DELETE FROM category WHERE id_category = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            sql.disconnectSql();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

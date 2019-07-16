@@ -12,18 +12,15 @@ public class LoginController {
 
 
     public void login() throws IOException {
-        try {
-            String login = UserInputController.stringUserInput("Enter login: ");
-            String password = UserInputController.stringUserInput("Enter password: ");
-            for (User user : new UsersDao().readContent()) {
-                if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                    System.out.println("You logged succesfully!");
-                } else {
-                    System.out.println("Wrong login or password.");
-                }
+        String login = UserInputController.stringUserInput("Enter login: ");
+        String password = UserInputController.stringUserInput("Enter password: ");
+        for (User user : new UsersDao().readContent()) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                System.out.println("You logged succesfully!");
+            } else {
+                System.out.println("Wrong login or password.");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
     }
 }
