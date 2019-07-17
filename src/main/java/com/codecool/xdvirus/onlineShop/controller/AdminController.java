@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class AdminController {
 
+    ProductDao pD = new ProductDao();
     AdminView view = new AdminView();
 
     public void mainMenuController() {
@@ -163,19 +164,16 @@ public class AdminController {
 
     public void addProduct() {
         Product newProduct = new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), enterCategory());
-        ProductDao pD = new ProductDao();
         pD.createContent(newProduct);
     }
 
     public void editProduct() {
-        ProductDao pD = new ProductDao();
         pD.updateContent(new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), enterCategory()));
     }
 
     public void removeProduct() {
 
         Scanner scanner = new Scanner(System.in);
-        ProductDao pD = new ProductDao();
         System.out.println("Please enter index of product to be removed: ");
         pD.removeContent(scanner.nextInt());
 
