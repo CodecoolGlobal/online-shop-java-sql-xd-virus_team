@@ -10,89 +10,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDao implements Dao<Product> {
-    Sql sql;
+
 
     @Override
-    public List<Product> readContent() {
+    public List<Product> readContent() throws SQLException {
+        ResultSet resultSet = new Sql().selectSql("SELECT * FROM products");
         List<Product> productList = new ArrayList<>();
-        sql = new Sql();
-        try {
-            ResultSet resultSet = sql.selectSql("SELECT * FROM product");
-            while (resultSet.next()) {
-                productList.add(new Product(
-                        resultSet.getInt("id_product"),
-                        resultSet.getString("name"),
-                        resultSet.getDouble("price"),
-                        resultSet.getInt("amount"),
-                        resultSet.getBoolean("availibility"),
-                        resultSet.getInt("category")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while(resultSet.next()){
+            productList.add(new Product(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getDouble("price"),
+                    resultSet.getInt("amount"),
+                    resultSet.getBoolean("isAvailable"),
+                    resultSet.getInt("category")));
         }
-        sql.disconnectSql();
         return productList;
     }
 
     @Override
-    public void createContent(Product object) {
-        sql = new Sql();
-        try {
-            PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO product (id_product, " +
-                    "name, price, amount, isAvailable, category) values (?,?,?,?,?,?)");
-            preparedStatement.setInt(1, object.getId());
-            preparedStatement.setString(2, object.getName());
-            preparedStatement.setDouble(3, object.getPrice());
-            preparedStatement.setInt(4, object.getAmount());
-            preparedStatement.setBoolean(5, object.isAvailable());
-            preparedStatement.setInt(6, object.getCategory());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-            sql.disconnectSql();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void createContent(Product object) throws SQLException {
+        PreparedStatement preparedStatement = new Sql().prepareSql("INSERT INTO products (id, name, price, amount, isAvailable, category) values (?,?,?,?,?,?)");
+        preparedStatement.setInt(1,object.getId());
+        preparedStatement.setString(2,object.getName());
+        preparedStatement.setDouble(3,object.getPrice());
+        preparedStatement.setInt(4,object.getAmount());
+        preparedStatement.setBoolean(5,object.isAvailable());
+        preparedStatement.setInt(6,object.getCategory());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
 
     }
 
     @Override
-    public void updateContent(Product object) {
-        sql = new Sql();
-        try {
-            PreparedStatement preparedStatement = sql.prepareSql("UPDATE product SET name = ?, " +
-                    "price = ?, " +
-                    "amount = ?, " +
-                    "isAvailable = ?, " +
-                    "category = ? " +
-                    "WHERE id_product = ?");
-            preparedStatement.setString(1, object.getName());
-            preparedStatement.setDouble(2, object.getPrice());
-            preparedStatement.setInt(3, object.getAmount());
-            preparedStatement.setBoolean(4, object.isAvailable());
-            preparedStatement.setInt(5, object.getCategory());
-            preparedStatement.setInt(6, object.getId());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-            sql.disconnectSql();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void updateContent(Product object) throws SQLException {
+        PreparedStatement preparedStatement = new Sql().prepareSql("UPDATE products SET name = ?, price = ?, amount = ?, isAvailable = ?, category = ? WHERE id = ?");
+        preparedStatement.setString(1,object.getName());
+        preparedStatement.setDouble(2,object.getPrice());
+        preparedStatement.setInt(3,object.getAmount());
+        preparedStatement.setBoolean(4,object.isAvailable());
+        preparedStatement.setInt(5,object.getCategory());
+        preparedStatement.setInt(6,object.getId());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
 
     }
 
     @Override
-    public void removeContent(int id) {
-        sql = new Sql();
-        try {
-            PreparedStatement preparedStatement = new Sql().prepareSql("DELETE FROM product " +
-                    "WHERE id_product, = ?");
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-            sql.disconnectSql();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void removeContent(int id) throws SQLException {
+        PreparedStatement preparedStatement = new Sql().prepareSql("DELETE FROM products WHERE id = ?");
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
 
     }
 }
