@@ -18,10 +18,10 @@ public class AdminView {
         System.out.println("(3.) Remove product");
         System.out.println("(4.) Back");
     }
-    public void adminCustomersMenu() {
+    public void adminOrdersMenu() {
 
-        System.out.println("(1.) Edit customer");
-        System.out.println("(2.) Remove customer");
+        System.out.println("(1.) Edit order");
+        System.out.println("(2.) Remove order");
         System.out.println("(3.) Back");
     }
     public void adminCategoriesMenu() {

@@ -13,29 +13,27 @@ public class AdminController {
     AdminView view = new AdminView();
 
     public void mainMenuController() {
+
         view.adminMainMenu();
-
         Scanner scanner = new Scanner(System.in);
-
         try {
             int choice = scanner.nextInt();
             if (choice > 0 && choice < 6) {
                 switch (choice) {
 
                     case 1:
-                        view.adminProductsMenu();
-                        addProduct();
+                        productMenuController();
                         break;
                     case 2:
-                        view.adminCustomersMenu();
+                        ordersMenuController();
                         break;
                     case 3:
-                        // TODO orders table
+                        break;
                     case 4:
                         view.adminCategoriesMenu();
                         break;
                     case 5:
-                        //TODO Logging out
+                        break;
                 }
             } else {
                 System.out.println("Enter number from 1 to 5");
@@ -45,6 +43,65 @@ public class AdminController {
 
         }
 
+    }
+
+    public void productMenuController() {
+
+        view.adminProductsMenu();
+        Scanner scanner = new Scanner(System.in);
+        try {
+            int choice = scanner.nextInt();
+            if (choice > 0 && choice < 5) {
+                switch (choice) {
+
+                    case 1:
+                        addProduct();
+                        break;
+                    case 2:
+                        editProduct();
+                        break;
+                    case 3:
+                        removeProduct();
+                        break;
+                    case 4:
+                        mainMenuController();
+                }
+            } else {
+                System.out.println("Enter number from 1 to 4");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a number");
+
+        }
+
+    }
+
+    public void ordersMenuController() {
+
+        view.adminOrdersMenu();
+        Scanner scanner = new Scanner(System.in);
+        try {
+            int choice = scanner.nextInt();
+            if (choice > 0 && choice < 5) {
+                switch (choice) {
+
+                    case 1:
+                        //editOrder();
+                        break;
+                    case 2:
+                        //removeOrder();
+                        break;
+                    case 3:
+                        mainMenuController();
+                        break;
+                }
+            } else {
+                System.out.println("Enter number from 1 to 4");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a number");
+
+        }
     }
 
     public String enterName() {
@@ -91,7 +148,7 @@ public class AdminController {
         Scanner scanner = new Scanner(System.in);
         int category = 0;
 
-        System.out.println("Choose category number: ");
+        System.out.println("Choose category: ");
         CategoryDao cD = new CategoryDao();
         for (int index = 1; index < cD.readContent().size(); index++) {
             System.out.println(index + cD.readContent().indexOf(index));
@@ -99,7 +156,7 @@ public class AdminController {
         try {
             category = scanner.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Please enter number");
+            System.out.println("Please enter string");
         }
         return category;
     }
@@ -110,6 +167,19 @@ public class AdminController {
         pD.createContent(newProduct);
     }
 
+    public void editProduct() {
+        ProductDao pD = new ProductDao();
+        pD.updateContent(new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), enterCategory()));
+    }
+
+    public void removeProduct() {
+
+        Scanner scanner = new Scanner(System.in);
+        ProductDao pD = new ProductDao();
+        System.out.println("Please enter index of product to be removed: ");
+        pD.removeContent(scanner.nextInt());
+
+    }
 
     public static void main(String[] args) {
         AdminController adm = new AdminController();
