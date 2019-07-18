@@ -54,7 +54,8 @@ public class BasketDao implements Dao<Basket> {
     public void updateContent(Basket object) {
         sql = new Sql();
         try {
-            PreparedStatement preparedStatement = sql.prepareSql("UPDATE basket SET prod_id = ? WHERE id_basket = ?");
+            PreparedStatement preparedStatement = sql.prepareSql("UPDATE basket SET prod_id = ?0" +
+                    " WHERE id_basket = ?");
             preparedStatement.setInt(1, object.getProduct_id());
             preparedStatement.setInt(2, object.getId());
             preparedStatement.executeUpdate();

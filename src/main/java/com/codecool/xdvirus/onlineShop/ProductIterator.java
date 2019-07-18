@@ -36,8 +36,11 @@ public class ProductIterator implements Iterator {
     public List<Product> getList() {
         return this.productsList;
 
-
     }
 
+
 }
+
+
+
 

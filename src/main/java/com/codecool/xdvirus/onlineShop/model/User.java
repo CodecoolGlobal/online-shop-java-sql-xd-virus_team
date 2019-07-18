@@ -13,6 +13,11 @@ public class User {
         this.permission = permission;
     }
 
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public int getId() {
         return id;
     }
