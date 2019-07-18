@@ -233,9 +233,7 @@ public class CustomerController {
 
         }
     }
-
-
-
+  
     public void changeItemsQuantityInBasket() {
 
         Scanner scanner = new Scanner(System.in);
