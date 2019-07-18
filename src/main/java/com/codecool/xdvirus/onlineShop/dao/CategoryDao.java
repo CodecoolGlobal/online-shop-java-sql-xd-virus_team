@@ -32,9 +32,9 @@ public class CategoryDao implements Dao<Category> {
     public void createContent(Category object) {
         sql = new Sql();
         try {
-            PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO category (id_category, name) values(?, ?)");
-            preparedStatement.setInt(1, object.getId());
-            preparedStatement.setString(2, object.getName());
+            PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO category (name) values (?)");
+            //preparedStatement.setInt(1, object.getId());
+            preparedStatement.setString(1, object.getName());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             sql.disconnectSql();

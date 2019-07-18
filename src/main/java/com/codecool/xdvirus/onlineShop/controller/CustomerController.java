@@ -3,7 +3,12 @@ package com.codecool.xdvirus.onlineShop.controller;
 import com.codecool.xdvirus.onlineShop.ProductIterator;
 import com.codecool.xdvirus.onlineShop.dao.BasketDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
+import com.codecool.xdvirus.onlineShop.dao.Sql;
 import com.codecool.xdvirus.onlineShop.model.Basket;
+
+import com.codecool.xdvirus.onlineShop.model.Order;
+import com.codecool.xdvirus.onlineShop.model.Product;
+
 import com.codecool.xdvirus.onlineShop.view.CustomerView;
 
 import java.util.InputMismatchException;
@@ -12,9 +17,10 @@ import java.util.Scanner;
 public class CustomerController {
 
     CustomerView view = new CustomerView();
-    ProductDao productDao = new ProductDao();
-    ProductIterator iter = new ProductIterator(productDao.readContent());
-    BasketDao basketDao = new BasketDao();
+
+    ProductDao pD = new ProductDao();
+    BasketDao bD = new BasketDao();
+
 
     public void mainMenuController() {
 
@@ -39,6 +45,7 @@ public class CustomerController {
                         isChoosing = false;
                         break;
                     case 3:
+                        view.availableProductsTable();
                         view.addProdToBasket();
                         isChoosing = false;
                         break;
@@ -70,20 +77,18 @@ public class CustomerController {
         System.out.println("Enter products name: ");
         System.out.println(">>");
         String productName = scanner.nextLine();
-        //ProductIterator productIterator = new ProductIterator(productDao.readContent());
 
-        for (int i = 0; i < productDao.readContent().size(); i++) {
-            if (productDao.readContent().get(i).getName().equals(productName)) {
-                System.out.println("Enter quantity: ");
-                int productAmount = scanner.nextInt();
-                if (productDao.readContent().get(i).getAmount() >= productAmount) {
-                    Basket basket = new Basket(productDao.readContent().get(i).getId(), productAmount);
 
-                    BasketDao newbasket = new BasketDao();
+        Product product = pD.getByName(productName);
+        if (product.getName().equals(productName)) {
+            System.out.println("Enter quantity: ");
+            int productAmount = scanner.nextInt();
+            if (product.getAmount() >= productAmount) {
+                Basket basket = new Basket(product.getId(), productAmount);
+                bD.createContent(basket);
+                System.out.println("Product added");
 
-                    newbasket.createContent(basket);
-                    System.out.println("Product added");
-                }
+
             }
         }
 
@@ -190,10 +195,10 @@ public class CustomerController {
 
                         break;
                     case 1:
-
+                        placeOrder();
                         break;
                     case 2:
-
+                        changeItemsQuantityInBasket();
                         break;
                     case 3:
                         deleteProductFromBasket();
@@ -220,38 +225,63 @@ public class CustomerController {
         System.out.println(">> ");
         String itemsName = scanner.nextLine();
 
-        for (int i = 0; i < productDao.readContent().size(); i++) {
-            if (itemsName.equals(productDao.readContent().get(i).getName())) {
-                int productsId = productDao.readContent().get(i).getId();
-                for (int j = 0; j < basketDao.readContent().size(); j++) {
-                    if (productsId == basketDao.readContent().get(j).getProduct_id()) {
-                        int itemInBasketId = basketDao.readContent().get(j).getId();
-                        basketDao.removeContent(itemInBasketId);
-                        System.out.println("Item deleted");
 
-                    }
+        Product product = pD.getByName(itemsName);
+        bD.removeByProductId(product.getId());
+        System.out.println("Item deleted");
 
-                }
+
+    }
+
+    public void placeOrder() {//TODO not working
+
+        for (int i = 0; i < bD.readContent().size(); i++) {
+
+            int basket_id = bD.readContent().get(i).getId();
+            int order_id = bD.readContent().get(i).getOrder_id();
+            Order newOrder = new Order(order_id, basket_id, "Paid");
+
+        }
+    }
+r
+
+  
+    public void changeItemsQuantityInBasket() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter products name: ");
+        System.out.println(">>");
+        String productName = scanner.nextLine();
+
+        Product product = pD.getByName(productName);
+        bD.removeByProductId(product.getId());
+        System.out.println("Item deleted");
+
+        if (product.getName().equals(productName)) {
+            System.out.println("Enter quantity: ");
+            int productAmount = scanner.nextInt();
+            if (product.getAmount() >= productAmount) {
+                Basket basket = new Basket(product.getId(), productAmount);
+                bD.createContent(basket);
+                System.out.println("Product added");
+
 
 
             }
 
         }
-
     }
-/*
-    public void placeOrder(){
-
-        basketDao.Order newOrder = new Order();
-    }
-
     public static void main(String[] args) {
         CustomerController cstm = new CustomerController();
         cstm.mainMenuController();
     }
-
-*/
 }
+
+
+
+
+
+
 
 
 
