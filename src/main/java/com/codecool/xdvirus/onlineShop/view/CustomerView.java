@@ -46,28 +46,35 @@ public class CustomerView {
 
 
 
-        System.out.println("------------------------ALL PRODUCTS----------------------------------");
-        System.out.println("----------------------------------------------------------------------");
+        System.out.println("----------------------------------------------ALL PRODUCTS--------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------------------------------");
+        System.out.println("  |"+"Name                |category            |quantity            |price               |is item available");
+        System.out.println("------------------------------------------------------------------------------------------------------------");
 
         int maxColumnSize = 20;
         String emptySpace = " ";
 
         for (int i = 1; i < products.readContent().size(); i++) {
             String name = products.readContent().get(i).getName();
-            int category = products.readContent().get(i).getCategory();
+            int categories = products.readContent().get(i).getCategory();
             int quantity = products.readContent().get(i).getAmount();
             double price = products.readContent().get(i).getPrice();
+            String availibility = products.readContent().get(i).isAvailable();
+
 
             int maxColumnSizeMinusNameSize = maxColumnSize - name.length();
             String distanceName = stringMultiply(emptySpace, maxColumnSizeMinusNameSize);
 
-            int maxColumnSizeMinusCategorySize = maxColumnSize - Integer.toString(category).length();
+            int maxColumnSizeMinusCategorySize = maxColumnSize - Integer.toString(categories).length();
             String distanceCategory = stringMultiply(emptySpace, maxColumnSizeMinusCategorySize);
 
             int maxColumnSizeMinusQuantitySize = maxColumnSize - Integer.toString(quantity).length();
             String distanceQuantity = stringMultiply(emptySpace, maxColumnSizeMinusQuantitySize);
 
-            System.out.println(i + ".|" + name + distanceName + "|" + category + distanceCategory + "|" + quantity + distanceQuantity + "|" + price);
+            double maxColumnSizeMinusPriceSize = maxColumnSize - Double.toString(price).length();
+            String distancePrices = stringMultiplyDouble(emptySpace, maxColumnSizeMinusPriceSize);
+
+            System.out.println(i + ".|" + name + distanceName + "|" + categories + distanceCategory + "|" + quantity + distanceQuantity + "|" + price + distancePrices +"|"+availibility);
         }
 
     }
@@ -81,7 +88,7 @@ public class CustomerView {
 
         System.out.println("------------------------"+categoryName+"----------------------------------");
         System.out.println("----------------------------------------------------------------------");
-        System.out.println("  |"+"Name                |"+ "quantity            |"+ "price");
+        System.out.println("  |Name                |quantity            |price               |is item available");
         System.out.println("----------------------------------------------------------------------");
 
 
@@ -96,6 +103,7 @@ public class CustomerView {
             int category = products.readContent().get(i).getCategory();
             int quantity = products.readContent().get(i).getAmount();
             double price = products.readContent().get(i).getPrice();
+            String availibility = products.readContent().get(i).isAvailable();
 
             if(products.readContent().get(i).getCategory()==categoryId) {
 
@@ -109,7 +117,10 @@ public class CustomerView {
                 int maxColumnSizeMinusQuantitySize = maxColumnSize - Integer.toString(quantity).length();
                 String distanceQuantity = stringMultiply(emptySpace, maxColumnSizeMinusQuantitySize);
 
-                System.out.println(i + ".|" + name + distanceName  + "|" + quantity + distanceQuantity + "|" + price);
+                double maxColumnSizeMinusPriceSize = maxColumnSize - Double.toString(price).length();
+                String distance = stringMultiplyDouble(emptySpace, maxColumnSizeMinusPriceSize);
+
+                System.out.println(i + ".|" + name + distanceName  + "|" + quantity + distanceQuantity + "|" + price + distanceQuantity +"|"+availibility);
             }
         }
 
@@ -167,8 +178,44 @@ public class CustomerView {
 
     public void availableProductsTable(){
 
+        System.out.println("----------------------------------------------ALL AVAILABLE PRODUCTS-----------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------------------------------");
+        System.out.println("  |"+"Name                |category            |quantity            |price               |is item available");
+        System.out.println("------------------------------------------------------------------------------------------------------------");
 
+        int maxColumnSize = 20;
+        String emptySpace = " ";
+
+        for (int i = 1; i < products.readContent().size(); i++) {
+
+            String name = products.readContent().get(i).getName();
+            int categories = products.readContent().get(i).getCategory();
+            int quantity = products.readContent().get(i).getAmount();
+            double price = products.readContent().get(i).getPrice();
+            String availibility = products.readContent().get(i).isAvailable();
+
+            if (availibility.equals("true")){
+
+                    int maxColumnSizeMinusNameSize = maxColumnSize - name.length();
+                    String distanceName = stringMultiply(emptySpace, maxColumnSizeMinusNameSize);
+
+                    int maxColumnSizeMinusCategorySize = maxColumnSize - Integer.toString(categories).length();
+                    String distanceCategory = stringMultiply(emptySpace, maxColumnSizeMinusCategorySize);
+
+                    int maxColumnSizeMinusQuantitySize = maxColumnSize - Integer.toString(quantity).length();
+                    String distanceQuantity = stringMultiply(emptySpace, maxColumnSizeMinusQuantitySize);
+
+                    double maxColumnSizeMinusPriceSize = maxColumnSize - Double.toString(price).length();
+                    String distancePrices = stringMultiplyDouble(emptySpace, maxColumnSizeMinusPriceSize);
+
+                    System.out.println(i + ".|" + name + distanceName + "|" + categories + distanceCategory + "|" + quantity + distanceQuantity + "|" + price + distancePrices + "|" + availibility);
+                }
+            }
     }
+
+
+
+
 
 
     public static String stringMultiply(String s, int n){
@@ -179,5 +226,12 @@ public class CustomerView {
         return sb.toString();
     }
 
+    public static String stringMultiplyDouble(String s, double n){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < n; i++){
+            sb.append(s);
+        }
+        return sb.toString();
+    }
 
 }

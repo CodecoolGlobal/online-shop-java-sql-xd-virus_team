@@ -3,8 +3,10 @@ package com.codecool.xdvirus.onlineShop.controller;
 import com.codecool.xdvirus.onlineShop.ProductIterator;
 import com.codecool.xdvirus.onlineShop.dao.BasketDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
+import com.codecool.xdvirus.onlineShop.dao.Sql;
 import com.codecool.xdvirus.onlineShop.model.Basket;
 import com.codecool.xdvirus.onlineShop.model.Order;
+import com.codecool.xdvirus.onlineShop.model.Product;
 import com.codecool.xdvirus.onlineShop.view.CustomerView;
 
 import java.util.InputMismatchException;
@@ -14,7 +16,6 @@ public class CustomerController {
 
     CustomerView view = new CustomerView();
     ProductDao pD = new ProductDao();
-    ProductIterator iter = new ProductIterator(pD.readContent());
     BasketDao bD = new BasketDao();
 
     public void mainMenuController() {
@@ -43,6 +44,7 @@ public class CustomerController {
                         chooseCategoryController();
                         break;
                     case 3:
+                        view.availableProductsTable();
                         view.addProdToBasket();
                         break;
                     case 4:
@@ -69,20 +71,16 @@ public class CustomerController {
         System.out.println("Enter products name: ");
         System.out.println(">>");
         String productName = scanner.nextLine();
-        //ProductIterator productIterator = new ProductIterator(pD.readContent());
 
-        for (int i = 0; i < pD.readContent().size(); i++) {
-            if (pD.readContent().get(i).getName().equals(productName)) {
-                System.out.println("Enter quantity: ");
-                int productAmount = scanner.nextInt();
-                if (pD.readContent().get(i).getAmount() >= productAmount) {
-                    Basket basket = new Basket(pD.readContent().get(i).getId(), productAmount);
+        Product product = pD.getByName(productName);
+        if (product.getName().equals(productName)) {
+            System.out.println("Enter quantity: ");
+            int productAmount = scanner.nextInt();
+            if (product.getAmount() >= productAmount) {
+                Basket basket = new Basket(product.getId(), productAmount);
+                bD.createContent(basket);
+                System.out.println("Product added");
 
-                    BasketDao newbasket = new BasketDao();
-
-                    newbasket.createContent(basket);
-                    System.out.println("Product added");
-                }
             }
         }
 
@@ -189,10 +187,10 @@ public class CustomerController {
 
                         break;
                     case 1:
-
+                        placeOrder();
                         break;
                     case 2:
-
+                        changeItemsQuantityInBasket();
                         break;
                     case 3:
                         deleteProductFromBasket();
@@ -219,39 +217,59 @@ public class CustomerController {
         System.out.println(">> ");
         String itemsName = scanner.nextLine();
 
-        for (int i = 0; i < pD.readContent().size(); i++) {
-            if (itemsName.equals(pD.readContent().get(i).getName())) {
-                int productsId = pD.readContent().get(i).getId();
-                for (int j = 0; j < bD.readContent().size(); j++) {
-                    if (productsId == bD.readContent().get(j).getProduct_id()) {
-                        int itemInBasketId = bD.readContent().get(j).getId();
-                        bD.removeContent(itemInBasketId);
-                        System.out.println("Item deleted");
+        Product product = pD.getByName(itemsName);
+        bD.removeByProductId(product.getId());
+        System.out.println("Item deleted");
 
-                    }
+    }
 
-                }
+    public void placeOrder() {//TODO not working
+
+        for (int i = 0; i < bD.readContent().size(); i++) {
+
+            int basket_id = bD.readContent().get(i).getId();
+            int order_id = bD.readContent().get(i).getOrder_id();
+            Order newOrder = new Order(order_id, basket_id, "Paid");
+
+        }
+    }
+
+
+
+    public void changeItemsQuantityInBasket() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter products name: ");
+        System.out.println(">>");
+        String productName = scanner.nextLine();
+
+        Product product = pD.getByName(productName);
+        bD.removeByProductId(product.getId());
+        System.out.println("Item deleted");
+
+        if (product.getName().equals(productName)) {
+            System.out.println("Enter quantity: ");
+            int productAmount = scanner.nextInt();
+            if (product.getAmount() >= productAmount) {
+                Basket basket = new Basket(product.getId(), productAmount);
+                bD.createContent(basket);
+                System.out.println("Product added");
 
 
             }
 
         }
-
     }
-
-    public void placeOrder(){
-
-        bD.
-        Order newOrder = new Order();
-    }
-
     public static void main(String[] args) {
         CustomerController cstm = new CustomerController();
         cstm.mainMenuController();
     }
-
-
 }
+
+
+
+
+
 
 
 
