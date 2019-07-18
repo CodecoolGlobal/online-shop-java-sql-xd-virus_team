@@ -4,7 +4,6 @@ import com.codecool.xdvirus.onlineShop.ProductIterator;
 import com.codecool.xdvirus.onlineShop.dao.BasketDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
 import com.codecool.xdvirus.onlineShop.model.Basket;
-import com.codecool.xdvirus.onlineShop.model.Order;
 import com.codecool.xdvirus.onlineShop.view.CustomerView;
 
 import java.util.InputMismatchException;
@@ -13,52 +12,54 @@ import java.util.Scanner;
 public class CustomerController {
 
     CustomerView view = new CustomerView();
-    ProductDao pD = new ProductDao();
-    ProductIterator iter = new ProductIterator(pD.readContent());
-    BasketDao bD = new BasketDao();
+    ProductDao productDao = new ProductDao();
+    ProductIterator iter = new ProductIterator(productDao.readContent());
+    BasketDao basketDao = new BasketDao();
 
     public void mainMenuController() {
-
-        /*(1.) Show all products.
-            ( 2.) Choose products category.
-            (3.) Show all available products.
-            (4.) Show my basket.
-            (5.) Show my orders. */
 
         view.customerMainMenu();
         Scanner scanner = new Scanner(System.in);
 
         try {
-            int choice = scanner.nextInt();
-            if (choice > 0 && choice < 6) {
+            boolean isChoosing = true;
+            while (isChoosing) {
+                int choice = scanner.nextInt();
                 switch (choice) {
 
                     case 1:
                         view.allProductsTable();
                         view.addProdToBasket();
                         addProductToBasketMenu();
+                        isChoosing = false;
                         break;
                     case 2:
                         view.chooseCategoryMenu();
                         chooseCategoryController();
+                        isChoosing = false;
                         break;
                     case 3:
                         view.addProdToBasket();
+                        isChoosing = false;
                         break;
                     case 4:
                         view.basketTable();
                         view.basketOptions();
                         basketEditMenu();
+                        isChoosing = false;
                         break;
                     case 5:
+                        isChoosing = false;
                         break;
+                    default:
+                        System.out.println("Enter number from 1 to 5\"");
                 }
-            } else {
-                System.out.println("Enter number from 1 to 5");
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Please enter a number");
 
+        } catch (
+                InputMismatchException e) {
+            System.out.println("Please enter a number");
+            mainMenuController();
         }
 
     }
@@ -69,14 +70,14 @@ public class CustomerController {
         System.out.println("Enter products name: ");
         System.out.println(">>");
         String productName = scanner.nextLine();
-        //ProductIterator productIterator = new ProductIterator(pD.readContent());
+        //ProductIterator productIterator = new ProductIterator(productDao.readContent());
 
-        for (int i = 0; i < pD.readContent().size(); i++) {
-            if (pD.readContent().get(i).getName().equals(productName)) {
+        for (int i = 0; i < productDao.readContent().size(); i++) {
+            if (productDao.readContent().get(i).getName().equals(productName)) {
                 System.out.println("Enter quantity: ");
                 int productAmount = scanner.nextInt();
-                if (pD.readContent().get(i).getAmount() >= productAmount) {
-                    Basket basket = new Basket(pD.readContent().get(i).getId(), productAmount);
+                if (productDao.readContent().get(i).getAmount() >= productAmount) {
+                    Basket basket = new Basket(productDao.readContent().get(i).getId(), productAmount);
 
                     BasketDao newbasket = new BasketDao();
 
@@ -219,13 +220,13 @@ public class CustomerController {
         System.out.println(">> ");
         String itemsName = scanner.nextLine();
 
-        for (int i = 0; i < pD.readContent().size(); i++) {
-            if (itemsName.equals(pD.readContent().get(i).getName())) {
-                int productsId = pD.readContent().get(i).getId();
-                for (int j = 0; j < bD.readContent().size(); j++) {
-                    if (productsId == bD.readContent().get(j).getProduct_id()) {
-                        int itemInBasketId = bD.readContent().get(j).getId();
-                        bD.removeContent(itemInBasketId);
+        for (int i = 0; i < productDao.readContent().size(); i++) {
+            if (itemsName.equals(productDao.readContent().get(i).getName())) {
+                int productsId = productDao.readContent().get(i).getId();
+                for (int j = 0; j < basketDao.readContent().size(); j++) {
+                    if (productsId == basketDao.readContent().get(j).getProduct_id()) {
+                        int itemInBasketId = basketDao.readContent().get(j).getId();
+                        basketDao.removeContent(itemInBasketId);
                         System.out.println("Item deleted");
 
                     }
@@ -238,11 +239,10 @@ public class CustomerController {
         }
 
     }
-
+/*
     public void placeOrder(){
 
-        bD.
-        Order newOrder = new Order();
+        basketDao.Order newOrder = new Order();
     }
 
     public static void main(String[] args) {
@@ -250,7 +250,7 @@ public class CustomerController {
         cstm.mainMenuController();
     }
 
-
+*/
 }
 
 

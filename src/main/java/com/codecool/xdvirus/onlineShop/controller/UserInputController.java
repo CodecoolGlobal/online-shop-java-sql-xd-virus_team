@@ -4,11 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
- class UserInputController {
+class UserInputController {
 
 
-     static String stringUserInput(String keyString) throws IOException {
+    static String stringUserInput(String keyString) throws IOException {
         System.out.println(keyString);
         return new BufferedReader(new InputStreamReader(System.in)).readLine();
+    }
+
+    static int integerUserInput(String keyString) throws IOException {
+        System.out.println(keyString);
+        return new BufferedReader(new InputStreamReader(System.in)).read();
     }
 }

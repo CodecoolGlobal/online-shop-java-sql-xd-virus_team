@@ -12,7 +12,7 @@ public class ProductIterator implements Iterator {
     private int index;
     List<Product> productsList;
 
-    public ProductIterator(List<Product> list){
+    public ProductIterator(List<Product> list) {
         this.productsList = list;
     }
 
@@ -34,14 +34,12 @@ public class ProductIterator implements Iterator {
     public void remove() {
         this.index = 0;
     }
-    public List<Product> getList(){
+
+    public List<Product> getList() {
         return this.productsList;
-
-
-    public Product getProductIndex(int index){
-
-
     }
+
+
 }
 
 
