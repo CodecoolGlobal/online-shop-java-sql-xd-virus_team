@@ -79,4 +79,20 @@ public class BasketDao implements Dao<Basket> {
             e.printStackTrace();
         }
     }
+    public void removeByProductId(int prod_id){
+
+        sql = new Sql();
+
+        try {
+            PreparedStatement preparedStatement = sql.prepareSql("DELETE FROM basket WHERE prod_id = ?");
+            preparedStatement.setInt(1, prod_id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            sql.disconnectSql();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

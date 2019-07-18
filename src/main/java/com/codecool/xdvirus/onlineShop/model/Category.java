@@ -1,6 +1,5 @@
 package com.codecool.xdvirus.onlineShop.model;
 
-import java.util.List;
 
 public class Category {
 
@@ -9,6 +8,10 @@ public class Category {
 
     public Category(int id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public Category(String name) {
         this.name = name;
     }
 
@@ -23,6 +26,10 @@ public class Category {
     @Override
     public String toString() {
         return this.id + " " + this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

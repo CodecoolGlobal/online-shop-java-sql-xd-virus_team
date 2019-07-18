@@ -37,12 +37,10 @@ public class UsersDao implements Dao<User> {
         sql = new Sql();
         try {
             PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO user " +
-                    "(id_user, login, password, permission) " +
-                    "values(?, ?, ?, ?)");
-            preparedStatement.setInt(1, object.getId());
-            preparedStatement.setString(2, object.getLogin());
-            preparedStatement.setString(3, object.getPassword());
-            preparedStatement.setInt(4, object.getPermission());
+                    "(login, password) " +
+                    "values(?, ?)");
+            preparedStatement.setString(1, object.getLogin());
+            preparedStatement.setString(2, object.getPassword());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             sql.disconnectSql();

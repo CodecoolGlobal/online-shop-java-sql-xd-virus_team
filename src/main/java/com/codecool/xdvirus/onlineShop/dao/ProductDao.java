@@ -39,7 +39,6 @@ public class ProductDao implements Dao<Product> {
         sql = new Sql();
         try {
             PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO product (name, price, amount, availibility, category) values (?,?,?,?,?)");
-            preparedStatement.setInt(1, object.getId());
             preparedStatement.setString(1, object.getName());
             preparedStatement.setDouble(2, object.getPrice());
             preparedStatement.setInt(3, object.getAmount());
@@ -94,4 +93,29 @@ public class ProductDao implements Dao<Product> {
         }
 
     }
-}
+    public Product getByName(String name){
+
+        Product product=null;
+        sql = new Sql();
+        try {
+            PreparedStatement preparedStatement = sql.prepareSql("SELECT * FROM product WHERE name = ?");
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                product = new Product(
+                        resultSet.getInt("id_product"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("amount"),
+                        resultSet.getString("availibility"),
+                        resultSet.getInt("category"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        sql.disconnectSql();
+        return product;
+    }
+    }
+
