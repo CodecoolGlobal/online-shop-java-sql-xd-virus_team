@@ -19,28 +19,23 @@ public class RootController {
     public void initializeApplication() {
         rootView.rootMenu();
         boolean isInitializing = true;
-        try {
-            while (isInitializing) {
-                int userInput = rootView.validateUserInput();
-                switch (userInput) {
-                    case 1:
-                        loggingIntoApplication();
-                        isInitializing = false;
-                        break;
-                    case 2:
-                        new CreateUserController().userCreation();
-                        isInitializing = false;
-                        break;
-                    case 3:
-                        isInitializing = false;
-                        break;
-                    default:
-                        System.out.println("The input must be a number between 1-3.");
-                }
+        while (isInitializing) {
+            int userInput = rootView.validateIntegerUserInput();
+            switch (userInput) {
+                case 1:
+                    loggingIntoApplication();
+                    isInitializing = false;
+                    break;
+                case 2:
+                    new CreateUserController().userCreation();
+                    isInitializing = false;
+                    break;
+                case 3:
+                    isInitializing = false;
+                    break;
+                default:
+                    System.out.println("The input must be a number between 1-3.");
             }
-
-        } catch (IllegalArgumentException | IOException e) {
-            System.out.println("The input must be a number!");
         }
     }
 

@@ -243,7 +243,7 @@ public class CustomerController {
 
         }
     }
-r
+
 
   
     public void changeItemsQuantityInBasket() {
