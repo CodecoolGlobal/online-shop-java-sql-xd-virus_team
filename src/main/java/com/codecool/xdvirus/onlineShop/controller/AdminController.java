@@ -171,23 +171,23 @@ public class AdminController {
     }
 
     public void editProduct() {
-
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter products name to edit: ");
         System.out.println(">>");
         String productName = scanner.nextLine();
 
         for (int i = 0; i < pD.readContent().size(); i++) {
-            Product editedProduct;
-            editedProduct = pD.readContent().get(i);
-            if (editedProduct.getName().equals(productName)) {
+
+            if (pD.readContent().get(i).getName().equals(productName)) {
+                Product editedProduct;
+                editedProduct = pD.readContent().get(i);
                 editedProduct.setName(enterName());
                 editedProduct.setPrice(enterPrice());
                 editedProduct.setAmount(enterAmount());
                 editedProduct.setAvailibility(enterAvailibility());
                 editedProduct.setCategory(enterCategory());
                 pD.updateContent(editedProduct);
+
 
             }
         }
