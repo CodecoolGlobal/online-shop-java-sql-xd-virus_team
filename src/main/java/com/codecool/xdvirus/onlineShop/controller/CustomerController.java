@@ -239,11 +239,6 @@ public class CustomerController {
 
     }
 
-    public void placeOrder(){
-
-        bD.
-        Order newOrder = new Order();
-    }
 
     public static void main(String[] args) {
         CustomerController cstm = new CustomerController();

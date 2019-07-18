@@ -6,6 +6,7 @@ import com.codecool.xdvirus.onlineShop.dao.ProductDao;
 import com.codecool.xdvirus.onlineShop.model.Product;
 import com.codecool.xdvirus.onlineShop.view.AdminView;
 import com.codecool.xdvirus.onlineShop.controller.UserInputController;
+import com.codecool.xdvirus.onlineShop.view.CustomerView;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,17 +15,16 @@ public class AdminController {
 
     ProductDao pD = new ProductDao();
     AdminView view = new AdminView();
+    CustomerView customerView = new CustomerView();
     ProductIterator productIterator = new ProductIterator(pD.readContent());
 
     public void mainMenuController() {
-
         view.adminMainMenu();
         Scanner scanner = new Scanner(System.in);
         try {
             int choice = scanner.nextInt();
             if (choice > 0 && choice < 6) {
                 switch (choice) {
-
                     case 1:
                         productMenuController();
                         break;
@@ -44,13 +44,12 @@ public class AdminController {
             }
         } catch (InputMismatchException e) {
             System.out.println("Please enter a number");
-
         }
-
     }
 
     public void productMenuController() {
 
+        customerView.allProductsTable();
         view.adminProductsMenu();
         Scanner scanner = new Scanner(System.in);
         try {
@@ -75,9 +74,7 @@ public class AdminController {
             }
         } catch (InputMismatchException e) {
             System.out.println("Please enter a number");
-
         }
-
     }
 
     public void ordersMenuController() {
@@ -104,7 +101,6 @@ public class AdminController {
             }
         } catch (InputMismatchException e) {
             System.out.println("Please enter a number");
-
         }
     }
 
@@ -188,8 +184,6 @@ public class AdminController {
                 editedProduct.setAvailibility(enterAvailibility());
                 editedProduct.setCategory(enterCategory());
                 pD.updateContent(editedProduct);
-
-
             }
         }
     }
@@ -199,7 +193,6 @@ public class AdminController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter index of product to be removed: ");
         pD.removeContent(scanner.nextInt());
-
     }
 
     public static void main(String[] args) {
