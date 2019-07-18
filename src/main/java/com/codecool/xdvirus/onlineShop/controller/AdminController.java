@@ -105,7 +105,7 @@ public class AdminController {
     }
 
     public void addProduct() {
-        Product newProduct = new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), enterCategory());
+        Product newProduct = new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), 1);
         ProductDao pD = new ProductDao();
         pD.createContent(newProduct);
     }

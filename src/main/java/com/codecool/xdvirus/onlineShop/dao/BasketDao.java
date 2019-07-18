@@ -19,8 +19,11 @@ public class BasketDao implements Dao<Basket> {
         try {
             ResultSet resultSet = sql.selectSql("SELECT * FROM basket");
             while (resultSet.next()) {
-                basketList.add(new Basket(resultSet.getInt("id_basket"), resultSet.getInt("prod_id"),
-                        resultSet.getInt("quantity_of_product"), resultSet.getInt("order_id")));
+                basketList.add(new Basket(
+                        resultSet.getInt("id_basket"),
+                        resultSet.getInt("prod_id"),
+                        resultSet.getInt("quantity_of_product"),
+                        resultSet.getInt("order_id")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,11 +37,11 @@ public class BasketDao implements Dao<Basket> {
         sql = new Sql();
         try {
             PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO basket " +
-                    "(id_basket, prod_id, quantity_of_product, order_id) values(?, ?, ?, ?)");
-            preparedStatement.setInt(1, object.getId());
-            preparedStatement.setInt(2, object.getProduct_id());
-            preparedStatement.setInt(3, object.getQuantity_of_product());
-            preparedStatement.setInt(4, object.getOrder_id());
+                    "( prod_id, quantity_of_product, order_id) values( ?, ?, ?)");
+            //preparedStatement.setInt(1, object.getId());
+            preparedStatement.setInt(1, object.getProduct_id());
+            preparedStatement.setInt(2, object.getQuantity_of_product());
+            preparedStatement.setInt(3, object.getOrder_id());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             sql.disconnectSql();
