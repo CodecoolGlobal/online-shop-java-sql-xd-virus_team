@@ -3,9 +3,9 @@ package com.codecool.xdvirus.onlineShop.controller;
 import com.codecool.xdvirus.onlineShop.ProductIterator;
 import com.codecool.xdvirus.onlineShop.dao.CategoryDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
+import com.codecool.xdvirus.onlineShop.model.Category;
 import com.codecool.xdvirus.onlineShop.model.Product;
 import com.codecool.xdvirus.onlineShop.view.AdminView;
-import com.codecool.xdvirus.onlineShop.controller.UserInputController;
 import com.codecool.xdvirus.onlineShop.view.CustomerView;
 
 import java.util.InputMismatchException;
@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class AdminController {
 
     ProductDao pD = new ProductDao();
+    CategoryDao categoryDao = new CategoryDao();
     AdminView view = new AdminView();
     CustomerView customerView = new CustomerView();
     ProductIterator productIterator = new ProductIterator(pD.readContent());
@@ -29,15 +30,44 @@ public class AdminController {
                         productMenuController();
                         break;
                     case 2:
-                        ordersMenuController();
+                        //ordersMenuController();
                         break;
                     case 3:
                         break;
                     case 4:
-                        view.adminCategoriesMenu();
+                        CategoriesMenuController();
                         break;
                     case 5:
                         break;
+                }
+            } else {
+                System.out.println("Enter number from 1 to 5");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a number");
+        }
+    }
+
+    public void CategoriesMenuController() {
+
+        showAllCategories();
+        view.adminCategoriesMenu();
+
+        Scanner scanner = new Scanner(System.in);
+        try {
+            int choice = scanner.nextInt();
+            if (choice > 0 && choice < 6) {
+                switch (choice) {
+                    case 1:
+                        addCategory();
+                        break;
+                    case 2:
+                        editCategory();
+                        break;
+                    case 3:
+                        removeCategory();
+                    case 4:
+                        mainMenuController();
                 }
             } else {
                 System.out.println("Enter number from 1 to 5");
@@ -77,7 +107,7 @@ public class AdminController {
         }
     }
 
-    public void ordersMenuController() {
+   /* public void ordersMenuController() {
 
         view.adminOrdersMenu();
         Scanner scanner = new Scanner(System.in);
@@ -102,7 +132,7 @@ public class AdminController {
         } catch (InputMismatchException e) {
             System.out.println("Please enter a number");
         }
-    }
+    }*/
 
     public String enterName() {
 
@@ -194,6 +224,46 @@ public class AdminController {
         System.out.println("Please enter index of product to be removed: ");
         pD.removeContent(scanner.nextInt());
     }
+
+    public void showAllCategories() {
+
+        for (int i = 0; i < categoryDao.readContent().size(); i++) {
+            System.out.println(categoryDao.readContent().get(i));
+        }
+
+    }
+
+    public void addCategory() {
+
+        Category newCategory = new Category(enterName());
+        categoryDao.createContent(newCategory);
+    }
+
+    public void editCategory() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter category name to edit: ");
+        System.out.println(">>");
+        String categoryName = scanner.nextLine();
+
+        for (int i = 0; i < categoryDao.readContent().size(); i++) {
+
+            if (categoryDao.readContent().get(i).getName().equals(categoryName)) {
+                Category editedCategory;
+                editedCategory = categoryDao.readContent().get(i);
+                editedCategory.setName(enterName());
+                categoryDao.updateContent(editedCategory);
+            }
+        }
+    }
+
+    public void removeCategory() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter index of category to be removed: ");
+        categoryDao.removeContent(scanner.nextInt());
+    }
+
 
     public static void main(String[] args) {
         AdminController adm = new AdminController();

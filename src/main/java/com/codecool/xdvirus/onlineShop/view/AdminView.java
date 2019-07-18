@@ -27,10 +27,12 @@ public class AdminView {
     public void adminCategoriesMenu() {
 
         System.out.println("(1.) Add category");
-        System.out.println("(2.) Edit category");
-        System.out.println("(3.) Remove product");
+        System.out.println("(2.) Edit category name");
+        System.out.println("(3.) Remove category");
         System.out.println("(4.) Back");
     }
+
+
 
 
 }
