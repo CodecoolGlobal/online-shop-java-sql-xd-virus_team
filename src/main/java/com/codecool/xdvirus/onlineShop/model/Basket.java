@@ -18,6 +18,10 @@ public class Basket {
         this.quantity_of_product = quantity_of_product;
         this.order_id = order_id;
     }
+    public Basket(int product_id, int quantity_of_product){
+        this.product_id = product_id;
+        this.quantity_of_product = quantity_of_product;
+    }
 
     public Iterator getIterator() {
 
