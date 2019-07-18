@@ -1,41 +1,43 @@
 package com.codecool.xdvirus.onlineShop.controller;
 
+import com.codecool.xdvirus.onlineShop.ProductIterator;
 import com.codecool.xdvirus.onlineShop.dao.CategoryDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
 import com.codecool.xdvirus.onlineShop.model.Product;
 import com.codecool.xdvirus.onlineShop.view.AdminView;
+import com.codecool.xdvirus.onlineShop.controller.UserInputController;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AdminController {
 
+    ProductDao pD = new ProductDao();
     AdminView view = new AdminView();
+    ProductIterator productIterator = new ProductIterator(pD.readContent());
 
     public void mainMenuController() {
+
         view.adminMainMenu();
-
         Scanner scanner = new Scanner(System.in);
-
         try {
             int choice = scanner.nextInt();
             if (choice > 0 && choice < 6) {
                 switch (choice) {
 
                     case 1:
-                        view.adminProductsMenu();
-                        addProduct();
+                        productMenuController();
                         break;
                     case 2:
-                        view.adminCustomersMenu();
+                        ordersMenuController();
                         break;
                     case 3:
-                        // TODO orders table
+                        break;
                     case 4:
                         view.adminCategoriesMenu();
                         break;
                     case 5:
-                        //TODO Logging out
+                        break;
                 }
             } else {
                 System.out.println("Enter number from 1 to 5");
@@ -45,6 +47,65 @@ public class AdminController {
 
         }
 
+    }
+
+    public void productMenuController() {
+
+        view.adminProductsMenu();
+        Scanner scanner = new Scanner(System.in);
+        try {
+            int choice = scanner.nextInt();
+            if (choice > 0 && choice < 5) {
+                switch (choice) {
+
+                    case 1:
+                        addProduct();
+                        break;
+                    case 2:
+                        editProduct();
+                        break;
+                    case 3:
+                        removeProduct();
+                        break;
+                    case 4:
+                        mainMenuController();
+                }
+            } else {
+                System.out.println("Enter number from 1 to 4");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a number");
+
+        }
+
+    }
+
+    public void ordersMenuController() {
+
+        view.adminOrdersMenu();
+        Scanner scanner = new Scanner(System.in);
+        try {
+            int choice = scanner.nextInt();
+            if (choice > 0 && choice < 5) {
+                switch (choice) {
+
+                    case 1:
+                        //editOrder();
+                        break;
+                    case 2:
+                        //removeOrder();
+                        break;
+                    case 3:
+                        mainMenuController();
+                        break;
+                }
+            } else {
+                System.out.println("Enter number from 1 to 4");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a number");
+
+        }
     }
 
     public String enterName() {
@@ -91,7 +152,7 @@ public class AdminController {
         Scanner scanner = new Scanner(System.in);
         int category = 0;
 
-        System.out.println("Choose category number: ");
+        System.out.println("Choose category: ");
         CategoryDao cD = new CategoryDao();
         for (int index = 1; index < cD.readContent().size(); index++) {
             System.out.println(index + cD.readContent().indexOf(index));
@@ -105,11 +166,41 @@ public class AdminController {
     }
 
     public void addProduct() {
-        Product newProduct = new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), 1);
-        ProductDao pD = new ProductDao();
+
+        Product newProduct = new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), enterCategory());
         pD.createContent(newProduct);
     }
 
+    public void editProduct() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter products name to edit: ");
+        System.out.println(">>");
+        String productName = scanner.nextLine();
+
+        for (int i = 0; i < pD.readContent().size(); i++) {
+
+            if (pD.readContent().get(i).getName().equals(productName)) {
+                Product editedProduct;
+                editedProduct = pD.readContent().get(i);
+                editedProduct.setName(enterName());
+                editedProduct.setPrice(enterPrice());
+                editedProduct.setAmount(enterAmount());
+                editedProduct.setAvailibility(enterAvailibility());
+                editedProduct.setCategory(enterCategory());
+                pD.updateContent(editedProduct);
+
+
+            }
+        }
+    }
+
+    public void removeProduct() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter index of product to be removed: ");
+        pD.removeContent(scanner.nextInt());
+
+    }
 
     public static void main(String[] args) {
         AdminController adm = new AdminController();
