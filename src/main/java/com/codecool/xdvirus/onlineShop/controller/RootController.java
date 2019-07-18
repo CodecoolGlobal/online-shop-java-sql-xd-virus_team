@@ -3,8 +3,7 @@ package com.codecool.xdvirus.onlineShop.controller;
 import com.codecool.xdvirus.onlineShop.view.RootView;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+
 
 public class RootController {
     private RootView rootView = new RootView();
@@ -18,7 +17,6 @@ public class RootController {
     }
 
     public void initializeApplication() {
-        Scanner scanner = new Scanner(System.in);
         rootView.rootMenu();
         boolean isInitializing = true;
         try {
