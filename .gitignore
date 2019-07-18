@@ -54,6 +54,7 @@ hs_err_pid*
 ## Plugin-specific files:
 
 # IntelliJ
+/target/
 /out/
 .idea/*
 *.iml
