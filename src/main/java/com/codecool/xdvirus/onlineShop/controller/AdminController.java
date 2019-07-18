@@ -12,12 +12,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AdminController {
-
     ProductDao pD = new ProductDao();
     CategoryDao categoryDao = new CategoryDao();
     AdminView view = new AdminView();
     CustomerView customerView = new CustomerView();
-    ProductIterator productIterator = new ProductIterator(pD.readContent());
 
     public void mainMenuController() {
         view.adminMainMenu();
@@ -52,7 +50,6 @@ public class AdminController {
 
         showAllCategories();
         view.adminCategoriesMenu();
-
         Scanner scanner = new Scanner(System.in);
         try {
             int choice = scanner.nextInt();
@@ -78,7 +75,6 @@ public class AdminController {
     }
 
     public void productMenuController() {
-
         customerView.allProductsTable();
         view.adminProductsMenu();
         Scanner scanner = new Scanner(System.in);
@@ -135,7 +131,6 @@ public class AdminController {
     }*/
 
     public String enterName() {
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter name:");
         String name = scanner.nextLine();
@@ -150,6 +145,7 @@ public class AdminController {
             price = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Please enter number");
+            enterPrice();
         }
         return price;
     }
@@ -162,37 +158,39 @@ public class AdminController {
             amount = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Please enter number");
+            enterAmount();
         }
         return amount;
     }
 
     public String enterAvailibility() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter availibility. (true/false)");
-        String availibility = scanner.nextLine();
-
+        String availibility = "";
+        try {
+            System.out.println("Enter availibility. (true/false)");
+            availibility = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            System.out.println("Enter availibility. (true/false)");
+        }
         return availibility;
     }
 
     public int enterCategory() {
         Scanner scanner = new Scanner(System.in);
         int category = 0;
-
         System.out.println("Choose category: ");
         CategoryDao cD = new CategoryDao();
-        for (int index = 1; index < cD.readContent().size(); index++) {
-            System.out.println(index + cD.readContent().indexOf(index));
-        }
+        showAllCategories();
         try {
             category = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Please enter number");
+            enterCategory();
         }
         return category;
     }
 
     public void addProduct() {
-
         Product newProduct = new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), enterCategory());
         pD.createContent(newProduct);
         mainMenuController();
@@ -205,7 +203,6 @@ public class AdminController {
         String productName = scanner.nextLine();
 
         for (int i = 0; i < pD.readContent().size(); i++) {
-
             if (pD.readContent().get(i).getName().equals(productName)) {
                 Product editedProduct;
                 editedProduct = pD.readContent().get(i);
@@ -220,28 +217,18 @@ public class AdminController {
         mainMenuController();
     }
 
-    //public void removeProduct() {
-
-    //    Scanner scanner = new Scanner(System.in);
-     //   System.out.println("Choose product name to remove: ");
-     //   System.out.println(">> ");
-      //  String itemsName = scanner.nextLine();
-      //  Product product = pD.getByName(itemsName);
-      //  pD.removeContent(product.getId());
-      //  System.out.println("Product deleted");
-       // mainMenuController();
-
-   // }
-   public void removeProduct() {
-
-       Scanner scanner = new Scanner(System.in);
-       System.out.println("Please enter index of product to be removed: ");
-       pD.removeContent(scanner.nextInt());
-       mainMenuController();
-   }
+    public void removeProduct() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter index of product to be removed: ");
+        try {
+            pD.removeContent(scanner.nextInt());
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter number");
+        }
+        mainMenuController();
+    }
 
     public void showAllCategories() {
-
         for (int i = 0; i < categoryDao.readContent().size(); i++) {
             System.out.println(categoryDao.readContent().get(i));
         }
@@ -249,21 +236,17 @@ public class AdminController {
     }
 
     public void addCategory() {
-
         Category newCategory = new Category(enterName());
         categoryDao.createContent(newCategory);
         mainMenuController();
     }
 
     public void editCategory() {
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter category name to edit: ");
         System.out.println(">>");
         String categoryName = scanner.nextLine();
-
         for (int i = 0; i < categoryDao.readContent().size(); i++) {
-
             if (categoryDao.readContent().get(i).getName().equals(categoryName)) {
                 Category editedCategory;
                 editedCategory = categoryDao.readContent().get(i);
@@ -275,18 +258,18 @@ public class AdminController {
     }
 
     public void removeCategory() {
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter index of category to be removed: ");
-        categoryDao.removeContent(scanner.nextInt());
-        mainMenuController();
+        try {
+            categoryDao.removeContent(scanner.nextInt());
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter number");
+            mainMenuController();
+        }
     }
-
 
     public static void main(String[] args) {
         AdminController adm = new AdminController();
         adm.mainMenuController();
     }
-
-
 }
