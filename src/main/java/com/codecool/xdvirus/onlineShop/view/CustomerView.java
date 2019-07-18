@@ -36,7 +36,8 @@ public class CustomerView {
         System.out.println("Choose an action: ");
         System.out.println("(1.) Place an order. ");
         System.out.println("(2.) Edit quantity. ");
-        System.out.println("(2.) Back to main menu. ");
+        System.out.println("(3.) Delete product. ");
+        System.out.println("(4.) Back to main menu. ");
 
 
     }
