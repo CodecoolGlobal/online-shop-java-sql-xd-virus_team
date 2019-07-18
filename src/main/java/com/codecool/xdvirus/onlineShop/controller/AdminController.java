@@ -195,6 +195,7 @@ public class AdminController {
 
         Product newProduct = new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), enterCategory());
         pD.createContent(newProduct);
+        mainMenuController();
     }
 
     public void editProduct() {
@@ -216,14 +217,28 @@ public class AdminController {
                 pD.updateContent(editedProduct);
             }
         }
+        mainMenuController();
     }
 
-    public void removeProduct() {
+    //public void removeProduct() {
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter index of product to be removed: ");
-        pD.removeContent(scanner.nextInt());
-    }
+    //    Scanner scanner = new Scanner(System.in);
+     //   System.out.println("Choose product name to remove: ");
+     //   System.out.println(">> ");
+      //  String itemsName = scanner.nextLine();
+      //  Product product = pD.getByName(itemsName);
+      //  pD.removeContent(product.getId());
+      //  System.out.println("Product deleted");
+       // mainMenuController();
+
+   // }
+   public void removeProduct() {
+
+       Scanner scanner = new Scanner(System.in);
+       System.out.println("Please enter index of product to be removed: ");
+       pD.removeContent(scanner.nextInt());
+       mainMenuController();
+   }
 
     public void showAllCategories() {
 
@@ -237,6 +252,7 @@ public class AdminController {
 
         Category newCategory = new Category(enterName());
         categoryDao.createContent(newCategory);
+        mainMenuController();
     }
 
     public void editCategory() {
@@ -255,6 +271,7 @@ public class AdminController {
                 categoryDao.updateContent(editedCategory);
             }
         }
+        mainMenuController();
     }
 
     public void removeCategory() {
@@ -262,6 +279,7 @@ public class AdminController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter index of category to be removed: ");
         categoryDao.removeContent(scanner.nextInt());
+        mainMenuController();
     }
 
 

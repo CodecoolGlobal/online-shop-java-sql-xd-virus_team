@@ -82,7 +82,7 @@ public class ProductDao implements Dao<Product> {
     public void removeContent(int id) {
         sql = new Sql();
         try {
-            PreparedStatement preparedStatement = new Sql().prepareSql("DELETE FROM product " +
+            PreparedStatement preparedStatement = sql.prepareSql("DELETE FROM product " +
                     "WHERE id_product = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -93,9 +93,10 @@ public class ProductDao implements Dao<Product> {
         }
 
     }
-    public Product getByName(String name){
 
-        Product product=null;
+    public Product getByName(String name) {
+
+        Product product = null;
         sql = new Sql();
         try {
             PreparedStatement preparedStatement = sql.prepareSql("SELECT * FROM product WHERE name = ?");
@@ -117,5 +118,7 @@ public class ProductDao implements Dao<Product> {
         sql.disconnectSql();
         return product;
     }
-    }
+
+
+}
 

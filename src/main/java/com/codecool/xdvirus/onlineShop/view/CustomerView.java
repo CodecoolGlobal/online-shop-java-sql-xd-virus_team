@@ -54,7 +54,7 @@ public class CustomerView {
         int maxColumnSize = 20;
         String emptySpace = " ";
 
-        for (int i = 1; i < products.readContent().size(); i++) {
+        for (int i = 0; i < products.readContent().size(); i++) {
             String name = products.readContent().get(i).getName();
             int categories = products.readContent().get(i).getCategory();
             int quantity = products.readContent().get(i).getAmount();
