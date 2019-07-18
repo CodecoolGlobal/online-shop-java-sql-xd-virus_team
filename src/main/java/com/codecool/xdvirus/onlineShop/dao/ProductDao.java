@@ -20,7 +20,7 @@ public class ProductDao implements Dao<Product> {
             ResultSet resultSet = sql.selectSql("SELECT * FROM product");
             while (resultSet.next()) {
                 productList.add(new Product(
-                        //resultSet.getInt("id_product"),
+                        resultSet.getInt("id_product"),
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("amount"),

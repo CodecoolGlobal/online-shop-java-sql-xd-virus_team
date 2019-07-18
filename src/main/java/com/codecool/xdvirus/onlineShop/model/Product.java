@@ -10,6 +10,15 @@ public class Product {
     private String availibility;
     private int category;
 
+    public Product(int id, String name, double price, int amount, String isAvailable, int category) {
+        this.id =id;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+        this.availibility = isAvailable;
+        this.category = category;
+    }
+
     public Product(String name, double price, int amount, String isAvailable, int category) {
 
         this.name = name;
@@ -18,6 +27,7 @@ public class Product {
         this.availibility = isAvailable;
         this.category = category;
     }
+
 
     public int getId() {
         return id;
