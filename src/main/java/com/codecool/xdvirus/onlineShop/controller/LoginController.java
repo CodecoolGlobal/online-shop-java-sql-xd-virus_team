@@ -9,26 +9,29 @@ import java.io.IOException;
 
 public class LoginController {
 
-    public void login() throws IOException {
+
+    private User loggedUser;
+
+    public boolean login() throws IOException {
         String login = UserInputController.stringUserInput("Enter login: ");
         String password = UserInputController.stringUserInput("Enter password: ");
         for (User user : new UsersDao().readContent()) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                 System.out.println("You logged succesfully!");
-                validatePermission(user);
-            } else {
-                System.out.println("Wrong login or password.");
+                loggedUser = new User(user.getId(), user.getLogin(), user.getPassword(), user.getPermission());
+                return true;
             }
         }
-
+        return false;
     }
 
 
-    public void validatePermission(User user) {
-        if (user.getPermission() == 0) {
-            System.out.println("Jesteś zakupowiczem!");
-        } else {
-            System.out.println("Jesteś czarodziejem Harry!");
-        }
+    public int validatePermission(User user) {
+        return user.getPermission();
     }
+
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+
 }

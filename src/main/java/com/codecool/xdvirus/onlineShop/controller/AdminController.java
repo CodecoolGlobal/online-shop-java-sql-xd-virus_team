@@ -110,11 +110,11 @@ public class AdminController {
         pD.createContent(newProduct);
     }
 
-
-    public static void main(String[] args) {
-        AdminController adm = new AdminController();
-        adm.mainMenuController();
-    }
+//
+  //  public static void main(String[] args) {
+  //      AdminController adm = new AdminController();
+   //     adm.mainMenuController();
+  //  }
 
 
 }
