@@ -26,13 +26,22 @@ public class ProductIterator implements Iterator {
     }
 
     @Override
-    public Object next() {
+    public Product next() {
         return productsList.get(index++);
     }
 
     @Override
     public void remove() {
         this.index = 0;
+    }
+
+    public List<Product> getProductsList() {
+        return productsList;
+    }
+
+    public Product getProductIndex(int index){
+
+        return productsList.get(index);
     }
 }
 

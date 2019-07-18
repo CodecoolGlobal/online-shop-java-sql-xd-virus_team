@@ -47,4 +47,24 @@ public class Product {
     public String toString() {
         return this.id+" "+this.name+" "+this.price+" "+this.amount+" "+this.availibility+" "+this.category;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setAvailibility(String availibility) {
+        this.availibility = availibility;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }

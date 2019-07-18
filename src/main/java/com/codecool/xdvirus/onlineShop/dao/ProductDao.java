@@ -39,7 +39,7 @@ public class ProductDao implements Dao<Product> {
         sql = new Sql();
         try {
             PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO product (name, price, amount, availibility, category) values (?,?,?,?,?)");
-            //preparedStatement.setInt(1, object.getId());
+            preparedStatement.setInt(1, object.getId());
             preparedStatement.setString(1, object.getName());
             preparedStatement.setDouble(2, object.getPrice());
             preparedStatement.setInt(3, object.getAmount());

@@ -1,9 +1,11 @@
 package com.codecool.xdvirus.onlineShop.controller;
 
+import com.codecool.xdvirus.onlineShop.ProductIterator;
 import com.codecool.xdvirus.onlineShop.dao.CategoryDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
 import com.codecool.xdvirus.onlineShop.model.Product;
 import com.codecool.xdvirus.onlineShop.view.AdminView;
+import com.codecool.xdvirus.onlineShop.controller.UserInputController;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,6 +14,7 @@ public class AdminController {
 
     ProductDao pD = new ProductDao();
     AdminView view = new AdminView();
+    ProductIterator productIterator = new ProductIterator(pD.readContent());
 
     public void mainMenuController() {
 
@@ -157,7 +160,7 @@ public class AdminController {
         try {
             category = scanner.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Please enter string");
+            System.out.println("Please enter number");
         }
         return category;
     }
@@ -168,7 +171,26 @@ public class AdminController {
     }
 
     public void editProduct() {
-        pD.updateContent(new Product(enterName(), enterPrice(), enterAmount(), enterAvailibility(), enterCategory()));
+
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter products name to edit: ");
+        System.out.println(">>");
+        String productName = scanner.nextLine();
+
+        for (int i = 0; i < pD.readContent().size(); i++) {
+            Product editedProduct;
+            editedProduct = pD.readContent().get(i);
+            if (editedProduct.getName().equals(productName)) {
+                editedProduct.setName(enterName());
+                editedProduct.setPrice(enterPrice());
+                editedProduct.setAmount(enterAmount());
+                editedProduct.setAvailibility(enterAvailibility());
+                editedProduct.setCategory(enterCategory());
+                pD.updateContent(editedProduct);
+
+            }
+        }
     }
 
     public void removeProduct() {
