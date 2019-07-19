@@ -1,17 +1,12 @@
 package com.codecool.xdvirus.onlineShop.controller;
 
-import com.codecool.xdvirus.onlineShop.ProductIterator;
 import com.codecool.xdvirus.onlineShop.dao.BasketDao;
-import com.codecool.xdvirus.onlineShop.dao.OrderDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
-import com.codecool.xdvirus.onlineShop.dao.Sql;
 import com.codecool.xdvirus.onlineShop.model.Basket;
-import com.codecool.xdvirus.onlineShop.model.Order;
 import com.codecool.xdvirus.onlineShop.model.Product;
 import com.codecool.xdvirus.onlineShop.view.CustomerView;
 
-import java.io.IOException;
-import java.util.InputMismatchException;
+
 import java.util.Scanner;
 
 public class CustomerController {
@@ -19,8 +14,6 @@ public class CustomerController {
     CustomerView view = new CustomerView();
     ProductDao pD = new ProductDao();
     BasketDao bD = new BasketDao();
-    OrderDao oD = new OrderDao();
-    Order currnentOrder;
 
     public void mainMenuController() {
 
@@ -218,7 +211,6 @@ public class CustomerController {
         bD.removeByProductId(product.getId());
         System.out.println("Item deleted");
         mainMenuController();
-
     }
 
 

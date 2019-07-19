@@ -2,7 +2,6 @@ package com.codecool.xdvirus.onlineShop.dao;
 
 import com.codecool.xdvirus.onlineShop.dao.intefaces.Dao;
 import com.codecool.xdvirus.onlineShop.model.Basket;
-import com.codecool.xdvirus.onlineShop.model.Product;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
