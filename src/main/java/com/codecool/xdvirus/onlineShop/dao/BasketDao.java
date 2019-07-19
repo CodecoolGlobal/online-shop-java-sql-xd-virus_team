@@ -23,7 +23,7 @@ public class BasketDao implements Dao<Basket> {
                         resultSet.getInt("id_basket"),
                         resultSet.getInt("prod_id"),
                         resultSet.getInt("quantity_of_product"),
-                        resultSet.getInt("order_id")));
+                        resultSet.getString("status")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,11 +37,9 @@ public class BasketDao implements Dao<Basket> {
         sql = new Sql();
         try {
             PreparedStatement preparedStatement = sql.prepareSql("INSERT INTO basket " +
-                    "( prod_id, quantity_of_product, order_id) values( ?, ?, ?)");
-            //preparedStatement.setInt(1, object.getId());
+                    "( prod_id, quantity_of_product) values( ?, ?)");
             preparedStatement.setInt(1, object.getProduct_id());
             preparedStatement.setInt(2, object.getQuantity_of_product());
-            preparedStatement.setInt(3, object.getOrder_id());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             sql.disconnectSql();
@@ -54,10 +52,10 @@ public class BasketDao implements Dao<Basket> {
     public void updateContent(Basket object) {
         sql = new Sql();
         try {
-            PreparedStatement preparedStatement = sql.prepareSql("UPDATE basket SET prod_id = ?0" +
-                    " WHERE id_basket = ?");
+            PreparedStatement preparedStatement = sql.prepareSql("UPDATE basket SET prod_id = ?,status = ? WHERE id_basket = ?");
             preparedStatement.setInt(1, object.getProduct_id());
-            preparedStatement.setInt(2, object.getId());
+            preparedStatement.setString(2, object.getStatus());
+            preparedStatement.setInt(3, object.getId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             sql.disconnectSql();
@@ -93,6 +91,28 @@ public class BasketDao implements Dao<Basket> {
             e.printStackTrace();
         }
 
+    }
+    public Basket getById(int productId) {
+
+        Basket basket  = null;
+        sql = new Sql();
+        try {
+            PreparedStatement preparedStatement = sql.prepareSql("SELECT * FROM basket WHERE prod_id = ?");
+            preparedStatement.setInt(1, productId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                basket = new Basket(
+                        resultSet.getInt("id_basket"),
+                        resultSet.getInt("prod_id"),
+                        resultSet.getInt("quantity_of_product"),
+                        resultSet.getString("status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        sql.disconnectSql();
+        return basket;
     }
 
 }

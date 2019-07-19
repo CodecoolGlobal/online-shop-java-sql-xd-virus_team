@@ -19,6 +19,7 @@ public class Product {
         this.category = category;
     }
 
+
     public Product(String name, double price, int amount, String isAvailable, int category) {
 
         this.name = name;
@@ -51,6 +52,10 @@ public class Product {
 
     public int getCategory() {
         return category;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override

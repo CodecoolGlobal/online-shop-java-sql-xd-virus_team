@@ -10,31 +10,37 @@ public class Basket {
     private ArrayList<Product> products;
     private int product_id;
     private int quantity_of_product;
-    private int order_id;
+    private String status;
 
-    public Basket(int id, int product_id, int quantity_of_product, int order_id) {
+    public Basket(int id, int product_id, int quantity_of_product, String status) {
         this.id = id;
         this.product_id = product_id;
         this.quantity_of_product = quantity_of_product;
-        this.order_id = order_id;
+        this.status = status;
     }
-    public Basket(int product_id, int quantity_of_product){
+
+    public Basket(int product_id, int quantity_of_product) {
         this.product_id = product_id;
         this.quantity_of_product = quantity_of_product;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Iterator getIterator() {
 
         return iterator;
+
     }
 
-    public void addProduct(Product product, Integer amount ) {
+    public void addProduct(Product product, Integer amount) {
 
         products.add(product);
 
     }
 
-    public void deleteProduct(Product product){
+    public void deleteProduct(Product product) {
 
         products.remove(product);
 
@@ -48,8 +54,8 @@ public class Basket {
         return product_id;
     }
 
-    public int getOrder_id() {
-        return order_id;
+    public String getStatus() {
+        return status;
     }
 
     public ArrayList<Product> getProducts() {
@@ -62,6 +68,6 @@ public class Basket {
 
     @Override
     public String toString() {
-        return "Id: " + id + " ,prod_id: " + product_id + " ,quantity: " + quantity_of_product + " ,order id: " + order_id;
+        return "Id: " + this.id + " ,prod_id: " + this.product_id + " ,quantity: " + this.quantity_of_product + " ,status " + this.status;
     }
 }
