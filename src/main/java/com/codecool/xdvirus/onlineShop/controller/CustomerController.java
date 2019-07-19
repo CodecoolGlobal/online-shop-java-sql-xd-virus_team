@@ -84,8 +84,15 @@ public class CustomerController {
                 System.out.println("Product added");
                 mainMenuController();
 
+            }else{
+                System.out.println("There is not enough items in stock");
+                mainMenuController();
             }
+        }else{
+            System.out.println("There is no such item in warehouse");
+            mainMenuController();
         }
+
 
     }
 
