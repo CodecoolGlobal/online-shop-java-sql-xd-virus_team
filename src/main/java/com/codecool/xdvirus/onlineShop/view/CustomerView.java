@@ -6,7 +6,12 @@ import com.codecool.xdvirus.onlineShop.dao.CategoryDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
 import com.codecool.xdvirus.onlineShop.model.Category;
 
+import java.util.Scanner;
+
 public class CustomerView {
+
+
+    private int userIntegerInput;
 
     ProductDao products = new ProductDao();
     CategoryDao category = new CategoryDao();
@@ -45,10 +50,9 @@ public class CustomerView {
     public void allProductsTable() {
 
 
-
         System.out.println("----------------------------------------------ALL PRODUCTS--------------------------------------------------");
         System.out.println("------------------------------------------------------------------------------------------------------------");
-        System.out.println("  |"+"Name                |category            |quantity            |price               |is item available");
+        System.out.println("  |" + "Name                |category            |quantity            |price               |is item available");
         System.out.println("------------------------------------------------------------------------------------------------------------");
 
         int maxColumnSize = 20;
@@ -74,24 +78,20 @@ public class CustomerView {
             double maxColumnSizeMinusPriceSize = maxColumnSize - Double.toString(price).length();
             String distancePrices = stringMultiplyDouble(emptySpace, maxColumnSizeMinusPriceSize);
 
-            System.out.println(i + ".|" + name + distanceName + "|" + categories + distanceCategory + "|" + quantity + distanceQuantity + "|" + price + distancePrices +"|"+availibility);
+            System.out.println(i + ".|" + name + distanceName + "|" + categories + distanceCategory + "|" + quantity + distanceQuantity + "|" + price + distancePrices + "|" + availibility);
         }
 
     }
 
-    public void categoryTable(int categoryId){
+    public void categoryTable(int categoryId) {
 
-            String categoryName = category.readContent().get(categoryId).getName();
-
-
+        String categoryName = category.readContent().get(categoryId).getName();
 
 
-        System.out.println("------------------------"+categoryName+"----------------------------------");
-        System.out.println("----------------------------------------------------------------------");
+        System.out.println("---------------------------------" + categoryName + "----------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------");
         System.out.println("  |Name                |quantity            |price               |is item available");
-        System.out.println("----------------------------------------------------------------------");
-
-
+        System.out.println("-----------------------------------------------------------------------------------");
 
 
         int maxColumnSize = 20;
@@ -105,7 +105,7 @@ public class CustomerView {
             double price = products.readContent().get(i).getPrice();
             String availibility = products.readContent().get(i).isAvailable();
 
-            if(products.readContent().get(i).getCategory()==categoryId) {
+            if (products.readContent().get(i).getCategory() == categoryId) {
 
 
                 int maxColumnSizeMinusNameSize = maxColumnSize - name.length();
@@ -120,20 +120,18 @@ public class CustomerView {
                 double maxColumnSizeMinusPriceSize = maxColumnSize - Double.toString(price).length();
                 String distance = stringMultiplyDouble(emptySpace, maxColumnSizeMinusPriceSize);
 
-                System.out.println(i + ".|" + name + distanceName  + "|" + quantity + distanceQuantity + "|" + price + distanceQuantity +"|"+availibility);
+                System.out.println(i + ".|" + name + distanceName + "|" + quantity + distanceQuantity + "|" + price + distanceQuantity + "|" + availibility);
             }
         }
 
     }
 
 
-
-
-    public void chooseCategoryMenu(){
+    public void chooseCategoryMenu() {
 
         System.out.println("Choose category: ");
-        for (int i = 0; i < category.readContent().size() ; i++) {
-            System.out.println("("+i+".) "+ category.readContent().get(i));
+        for (int i = 0; i < category.readContent().size(); i++) {
+            System.out.println("(" + i + ".) " + category.readContent().get(i));
 
 
         }
@@ -143,10 +141,10 @@ public class CustomerView {
     public void basketTable() {
 
 
-        System.out.println("------------------------YOUR BASKET----------------------------------");
-        System.out.println("----------------------------------------------------------------------");
-        System.out.println("  |"+"Name                |"+ "quantity            |"+ "price");
-        System.out.println("----------------------------------------------------------------------");
+        System.out.println("------------------------YOUR BASKET-----------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------");
+        System.out.println("  |" + "Name                |" + "quantity            |" + "price               |status");
+        System.out.println("----------------------------------------------------------------------------------------");
 
         int maxColumnSize = 20;
         String emptySpace = " ";
@@ -154,20 +152,24 @@ public class CustomerView {
         for (int i = 1; i < basket.readContent().size(); i++) {
             int productID = basket.readContent().get(i).getProduct_id();
             int quantity = basket.readContent().get(i).getQuantity_of_product();
+            String status = basket.readContent().get(i).getStatus();
             for (int j = 0; j < products.readContent().size(); j++) {
 
                 if (products.readContent().get(j).getId() == productID) {
                     String name = products.readContent().get(j).getName();
                     double price = products.readContent().get(j).getPrice();
-                    double priceSum = quantity*price;
+                    double priceSum = quantity * price;
                     int maxColumnSizeMinusNameSize = maxColumnSize - name.length();
                     String distanceName = stringMultiply(emptySpace, maxColumnSizeMinusNameSize);
 
 
                     int maxColumnSizeMinusQuantitySize = maxColumnSize - Integer.toString(quantity).length();
                     String distanceQuantity = stringMultiply(emptySpace, maxColumnSizeMinusQuantitySize);
+                    double maxColumnSizeMinusPriceSize = maxColumnSize - Double.toString(priceSum).length();
+                    String distancePrices = stringMultiplyDouble(emptySpace, maxColumnSizeMinusPriceSize);
 
-                    System.out.println(i + ".|" + name + distanceName + "|" + quantity + distanceQuantity + "|" + priceSum);
+
+                    System.out.println(" " + "|" + name + distanceName + "|" + quantity + distanceQuantity + "|" + priceSum + distancePrices+"|" + status);
 
                 }
 
@@ -176,11 +178,11 @@ public class CustomerView {
         }
     }
 
-    public void availableProductsTable(){
+    public void availableProductsTable() {
 
-        System.out.println("----------------------------------------------ALL AVAILABLE PRODUCTS-----------------------------------------");
+        System.out.println("----------------------------------------------ALL AVAILABLE PRODUCTS----------------------------------------");
         System.out.println("------------------------------------------------------------------------------------------------------------");
-        System.out.println("  |"+"Name                |category            |quantity            |price               |is item available");
+        System.out.println("  |Name                |category            |quantity            |price               |is item available");
         System.out.println("------------------------------------------------------------------------------------------------------------");
 
         int maxColumnSize = 20;
@@ -194,44 +196,54 @@ public class CustomerView {
             double price = products.readContent().get(i).getPrice();
             String availibility = products.readContent().get(i).isAvailable();
 
-            if (availibility.equals("true")){
+            if (availibility.equals("true")) {
 
-                    int maxColumnSizeMinusNameSize = maxColumnSize - name.length();
-                    String distanceName = stringMultiply(emptySpace, maxColumnSizeMinusNameSize);
+                int maxColumnSizeMinusNameSize = maxColumnSize - name.length();
+                String distanceName = stringMultiply(emptySpace, maxColumnSizeMinusNameSize);
 
-                    int maxColumnSizeMinusCategorySize = maxColumnSize - Integer.toString(categories).length();
-                    String distanceCategory = stringMultiply(emptySpace, maxColumnSizeMinusCategorySize);
+                int maxColumnSizeMinusCategorySize = maxColumnSize - Integer.toString(categories).length();
+                String distanceCategory = stringMultiply(emptySpace, maxColumnSizeMinusCategorySize);
 
-                    int maxColumnSizeMinusQuantitySize = maxColumnSize - Integer.toString(quantity).length();
-                    String distanceQuantity = stringMultiply(emptySpace, maxColumnSizeMinusQuantitySize);
+                int maxColumnSizeMinusQuantitySize = maxColumnSize - Integer.toString(quantity).length();
+                String distanceQuantity = stringMultiply(emptySpace, maxColumnSizeMinusQuantitySize);
 
-                    double maxColumnSizeMinusPriceSize = maxColumnSize - Double.toString(price).length();
-                    String distancePrices = stringMultiplyDouble(emptySpace, maxColumnSizeMinusPriceSize);
+                double maxColumnSizeMinusPriceSize = maxColumnSize - Double.toString(price).length();
+                String distancePrices = stringMultiplyDouble(emptySpace, maxColumnSizeMinusPriceSize);
 
-                    System.out.println(i + ".|" + name + distanceName + "|" + categories + distanceCategory + "|" + quantity + distanceQuantity + "|" + price + distancePrices + "|" + availibility);
-                }
+                System.out.println(i + ".|" + name + distanceName + "|" + categories + distanceCategory + "|" + quantity + distanceQuantity + "|" + price + distancePrices + "|" + availibility);
             }
+        }
     }
 
 
-
-
-
-
-    public static String stringMultiply(String s, int n){
+    public static String stringMultiply(String s, int n) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             sb.append(s);
         }
         return sb.toString();
     }
 
-    public static String stringMultiplyDouble(String s, double n){
+    public static String stringMultiplyDouble(String s, double n) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             sb.append(s);
         }
         return sb.toString();
     }
+
+    public int validateUserInput() {
+        boolean isNotValid = true;
+        while (isNotValid) {
+            Scanner scanner = new Scanner(System.in);
+            try {
+                userIntegerInput = Integer.valueOf(scanner.nextLine());
+                isNotValid = false;
+            } catch (NumberFormatException e){
+                System.out.println("Input must be a number");
+        }
+    }
+        return userIntegerInput;
+}
 
 }

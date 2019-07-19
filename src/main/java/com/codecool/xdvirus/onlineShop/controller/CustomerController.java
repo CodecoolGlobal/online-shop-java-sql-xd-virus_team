@@ -2,6 +2,7 @@ package com.codecool.xdvirus.onlineShop.controller;
 
 import com.codecool.xdvirus.onlineShop.ProductIterator;
 import com.codecool.xdvirus.onlineShop.dao.BasketDao;
+import com.codecool.xdvirus.onlineShop.dao.OrderDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
 import com.codecool.xdvirus.onlineShop.dao.Sql;
 import com.codecool.xdvirus.onlineShop.model.Basket;
@@ -9,6 +10,7 @@ import com.codecool.xdvirus.onlineShop.model.Order;
 import com.codecool.xdvirus.onlineShop.model.Product;
 import com.codecool.xdvirus.onlineShop.view.CustomerView;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -17,6 +19,8 @@ public class CustomerController {
     CustomerView view = new CustomerView();
     ProductDao pD = new ProductDao();
     BasketDao bD = new BasketDao();
+    OrderDao oD = new OrderDao();
+    Order currnentOrder;
 
     public void mainMenuController() {
 
@@ -27,43 +31,41 @@ public class CustomerController {
             (5.) Show my orders. */
 
         view.customerMainMenu();
-        Scanner scanner = new Scanner(System.in);
+        boolean isOn = true;
 
-        try {
-            int choice = scanner.nextInt();
-            if (choice > 0 && choice < 6) {
-                switch (choice) {
 
-                    case 1:
-                        view.allProductsTable();
-                        view.addProdToBasket();
-                        addProductToBasketMenu();
-                        break;
-                    case 2:
-                        view.chooseCategoryMenu();
-                        chooseCategoryController();
-                        break;
-                    case 3:
-                        view.availableProductsTable();
-                        view.addProdToBasket();
-                        break;
-                    case 4:
-                        view.basketTable();
-                        view.basketOptions();
-                        basketEditMenu();
-                        break;
-                    case 5:
-                        break;
-                }
-            } else {
-                System.out.println("Enter number from 1 to 5");
+        while (isOn) {
+            int userInput = new CustomerView().validateUserInput();
+            switch (userInput) {
+
+                case 1:
+                    view.allProductsTable();
+                    view.addProdToBasket();
+                    addProductToBasketMenu();
+                    break;
+                case 2:
+                    view.chooseCategoryMenu();
+                    chooseCategoryController();
+                    break;
+                case 3:
+                    view.availableProductsTable();
+                    view.addProdToBasket();
+                    addProductToBasketMenu();
+                    break;
+                case 4:
+                    view.basketTable();
+                    view.basketOptions();
+                    basketEditMenu();
+                    break;
+                case 5:
+                    break;
+                default:
+                    System.out.println("Input must be a number between 1 and 5");
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Please enter a number");
-
         }
 
     }
+
 
     public void addProductToBasket() {
 
@@ -80,6 +82,7 @@ public class CustomerController {
                 Basket basket = new Basket(product.getId(), productAmount);
                 bD.createContent(basket);
                 System.out.println("Product added");
+                mainMenuController();
 
             }
         }
@@ -93,25 +96,22 @@ public class CustomerController {
             (1.) Add product to basket.
             (2.) Back to main menu. */
 
-        Scanner scanner = new Scanner(System.in);
+        boolean isOn = true;
 
-        try {
-            int choice = scanner.nextInt();
-            if (choice > 0 && choice < 3) {
-                switch (choice) {
+        while (isOn) {
+            int userInput = new CustomerView().validateUserInput();
+            switch (userInput) {
 
-                    case 1:
-                        addProductToBasket();
-                        break;
-                    case 2:
-                        break;//TODO back to main menu
-                }
-            } else {
-                System.out.println("Enter number from 1 to 2");
+                case 1:
+                    addProductToBasket();
+                    break;
+                case 2:
+                    mainMenuController();
+                    break;
+                default:
+                    System.out.println("Input must be a number between 1 and 2");
+
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Please enter a number");
-
         }
 
     }
@@ -125,45 +125,36 @@ public class CustomerController {
             (3.) 3 Dairy
             (4.) 4 Drinks*/
 
-        Scanner scanner = new Scanner(System.in);
+        boolean isOn = true;
 
-        try {
-            int choice = scanner.nextInt();
-            if (choice >= 0 && choice < 5) {
-                switch (choice) {
 
-                    case 0:
-                        view.categoryTable(choice);
-                        view.addProdToBasket();
-                        addProductToBasketMenu();
-                        break;
-                    case 1:
-                        view.categoryTable(choice);
-                        view.addProdToBasket();
-                        addProductToBasketMenu();
-                        break;
-                    case 2:
-                        view.categoryTable(choice);
-                        view.addProdToBasket();
-                        addProductToBasketMenu();
-                        break;
-                    case 3:
-                        view.categoryTable(choice);
-                        view.addProdToBasket();
-                        addProductToBasketMenu();
-                        break;
-                    case 4:
-                        view.categoryTable(choice);
-                        view.addProdToBasket();
-                        addProductToBasketMenu();
-                        break;
-                }
-            } else {
-                System.out.println("Enter number from 0 to 4");
+        while (isOn) {
+            int userInput = new CustomerView().validateUserInput();
+
+            switch (userInput) {
+
+                case 0:
+                    chooseCategoryOption(userInput);
+                    break;
+                case 1:
+                    chooseCategoryOption(userInput);
+
+                    break;
+                case 2:
+                    chooseCategoryOption(userInput);
+
+                    break;
+                case 3:
+                    chooseCategoryOption(userInput);
+
+                    break;
+                case 4:
+                    chooseCategoryOption(userInput);
+
+                    break;
+                default:
+                    System.out.println("Input must be a number between 1 and 5");
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Please enter a number");
-
         }
 
     }
@@ -176,35 +167,31 @@ public class CustomerController {
             (3.) Delete product.
             (4.) Back to main menu. */
 
-        Scanner scanner = new Scanner(System.in);
+        boolean isOn = true;
 
-        try {
-            int choice = scanner.nextInt();
-            if (choice >= 0 && choice < 5) {
-                switch (choice) {
 
-                    case 0:
+        int userInput = new CustomerView().validateUserInput();
 
-                        break;
-                    case 1:
-                        placeOrder();
-                        break;
-                    case 2:
-                        changeItemsQuantityInBasket();
-                        break;
-                    case 3:
-                        deleteProductFromBasket();
-                        break;
-                    case 4:
-                        //TODO back to main menu
-                        break;
+        switch (userInput) {
 
-                }
-            } else {
-                System.out.println("Enter number from 0 to 4");
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Please enter a number");
+            case 0:
+
+                break;
+            case 1:
+                changeOrderStatus();
+                mainMenuController();
+                break;
+            case 2:
+                changeItemsQuantityInBasket();
+                break;
+            case 3:
+                deleteProductFromBasket();
+                break;
+            case 4:
+                mainMenuController();
+                break;
+            default:
+                System.out.println("Input must be a number between 1 and 4");
 
         }
 
@@ -220,20 +207,9 @@ public class CustomerController {
         Product product = pD.getByName(itemsName);
         bD.removeByProductId(product.getId());
         System.out.println("Item deleted");
+        mainMenuController();
 
     }
-
-    public void placeOrder() {//TODO not working
-
-        for (int i = 0; i < bD.readContent().size(); i++) {
-
-            int basket_id = bD.readContent().get(i).getId();
-            int order_id = bD.readContent().get(i).getOrder_id();
-            Order newOrder = new Order(order_id, basket_id, "Paid");
-
-        }
-    }
-
 
 
     public void changeItemsQuantityInBasket() {
@@ -254,16 +230,53 @@ public class CustomerController {
                 Basket basket = new Basket(product.getId(), productAmount);
                 bD.createContent(basket);
                 System.out.println("Product added");
+                mainMenuController();
 
 
             }
 
         }
     }
+
+
+    public void chooseCategoryOption(int userInput) {
+
+        view.categoryTable(userInput);
+        view.addProdToBasket();
+        addProductToBasketMenu();
+    }
+    public void changeOrderStatus(){
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter products name: ");
+        System.out.println(">>");
+
+        String productName = scanner.nextLine();
+        Product product = pD.getByName(productName);
+        int productId = product.getId();
+        Basket prodInbasket = bD.getById(productId);
+
+        int productAmountInBasket = prodInbasket.getQuantity_of_product();
+
+        if(product.getAmount()>=productAmountInBasket) {
+            product.setAmount(product.getAmount() - productAmountInBasket);
+            pD.updateContent(product);
+            prodInbasket.setStatus("Paid");
+            bD.updateContent(prodInbasket);
+
+        }else{
+            System.out.println("Not enough items in stock, to place order. Change items quantity.");
+        }
+
+
+    }
+
     public static void main(String[] args) {
         CustomerController cstm = new CustomerController();
         cstm.mainMenuController();
     }
+
+
 }
 
 

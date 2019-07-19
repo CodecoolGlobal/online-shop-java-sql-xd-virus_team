@@ -94,9 +94,10 @@ public class ProductDao implements Dao<Product> {
         }
 
     }
-    public Product getByName(String name){
 
-        Product product=null;
+    public Product getByName(String name) {
+
+        Product product = null;
         sql = new Sql();
         try {
             PreparedStatement preparedStatement = sql.prepareSql("SELECT * FROM product WHERE name = ?");
@@ -118,5 +119,5 @@ public class ProductDao implements Dao<Product> {
         sql.disconnectSql();
         return product;
     }
-    }
+}
 
