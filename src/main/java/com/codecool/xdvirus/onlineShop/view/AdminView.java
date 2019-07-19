@@ -6,10 +6,8 @@ public class AdminView {
 
         System.out.println("You logged as admin");
         System.out.println("(1.) Show all products.");
-        System.out.println("(2.) Show all orders.");
-        System.out.println("(3.) Show orders.");
-        System.out.println("(4.) Show categories.");
-        System.out.println("(5.) Logout");
+        System.out.println("(2.) Show categories.");
+        System.out.println("(3.) Logout");
     }
     public void adminProductsMenu() {
 

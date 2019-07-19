@@ -1,10 +1,12 @@
 package com.codecool.xdvirus.onlineShop.controller;
 
+
 import com.codecool.xdvirus.onlineShop.dao.BasketDao;
 import com.codecool.xdvirus.onlineShop.dao.ProductDao;
 import com.codecool.xdvirus.onlineShop.model.Basket;
 import com.codecool.xdvirus.onlineShop.model.Product;
 import com.codecool.xdvirus.onlineShop.view.CustomerView;
+
 
 import java.util.Scanner;
 
@@ -81,10 +83,10 @@ public class CustomerController {
                         System.out.println("There is not enough items in stock");
                         mainMenuController();
                     }
-                }
                 } else {
-                System.out.println("There is no such item in warehouse");
-                mainMenuController();
+                    System.out.println("There is no such item in warehouse");
+                    mainMenuController();
+                }
             }
         }
 
@@ -210,6 +212,7 @@ public class CustomerController {
         bD.removeByProductId(product.getId());
         System.out.println("Item deleted");
         mainMenuController();
+
     }
 
 
@@ -280,11 +283,4 @@ public class CustomerController {
 
 
 }
-
-
-
-
-
-
-
 

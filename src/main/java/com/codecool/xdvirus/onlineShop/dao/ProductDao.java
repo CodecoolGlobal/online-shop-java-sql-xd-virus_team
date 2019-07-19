@@ -82,8 +82,8 @@ public class ProductDao implements Dao<Product> {
     public void removeContent(int id) {
         sql = new Sql();
         try {
-            PreparedStatement preparedStatement = new Sql().prepareSql("DELETE FROM product " +
-                    "WHERE id_product, = ?");
+            PreparedStatement preparedStatement = sql.prepareSql("DELETE FROM product " +
+                    "WHERE id_product = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             preparedStatement.close();

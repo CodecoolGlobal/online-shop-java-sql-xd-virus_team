@@ -22,24 +22,17 @@ public class AdminController {
         Scanner scanner = new Scanner(System.in);
         try {
             int choice = scanner.nextInt();
-            if (choice > 0 && choice < 6) {
-                switch (choice) {
-                    case 1:
-                        productMenuController();
-                        break;
-                    case 2:
-                        //ordersMenuController();
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        CategoriesMenuController();
-                        break;
-                    case 5:
-                        break;
-                }
-            } else {
-                System.out.println("Enter number from 1 to 5");
+            switch (choice) {
+                case 1:
+                    productMenuController();
+                    break;
+                case 2:
+                    CategoriesMenuController();
+                    break;
+                case 3:
+                    break;
+                default:
+                    System.out.println("Enter number from 1 to 3");
             }
         } catch (InputMismatchException e) {
             System.out.println("Please enter a number");
@@ -47,7 +40,6 @@ public class AdminController {
     }
 
     public void CategoriesMenuController() {
-
         showAllCategories();
         view.adminCategoriesMenu();
         Scanner scanner = new Scanner(System.in);
@@ -63,8 +55,10 @@ public class AdminController {
                         break;
                     case 3:
                         removeCategory();
+                        break;
                     case 4:
                         mainMenuController();
+                        break;
                 }
             } else {
                 System.out.println("Enter number from 1 to 5");
@@ -82,7 +76,6 @@ public class AdminController {
             int choice = scanner.nextInt();
             if (choice > 0 && choice < 5) {
                 switch (choice) {
-
                     case 1:
                         addProduct();
                         break;
@@ -94,6 +87,7 @@ public class AdminController {
                         break;
                     case 4:
                         mainMenuController();
+                        break;
                 }
             } else {
                 System.out.println("Enter number from 1 to 4");
@@ -102,33 +96,6 @@ public class AdminController {
             System.out.println("Please enter a number");
         }
     }
-
-   /* public void ordersMenuController() {
-
-        view.adminOrdersMenu();
-        Scanner scanner = new Scanner(System.in);
-        try {
-            int choice = scanner.nextInt();
-            if (choice > 0 && choice < 5) {
-                switch (choice) {
-
-                    case 1:
-                        //editOrder();
-                        break;
-                    case 2:
-                        //removeOrder();
-                        break;
-                    case 3:
-                        mainMenuController();
-                        break;
-                }
-            } else {
-                System.out.println("Enter number from 1 to 4");
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Please enter a number");
-        }
-    }*/
 
     public String enterName() {
         Scanner scanner = new Scanner(System.in);
@@ -232,7 +199,6 @@ public class AdminController {
         for (int i = 0; i < categoryDao.readContent().size(); i++) {
             System.out.println(categoryDao.readContent().get(i));
         }
-
     }
 
     public void addCategory() {

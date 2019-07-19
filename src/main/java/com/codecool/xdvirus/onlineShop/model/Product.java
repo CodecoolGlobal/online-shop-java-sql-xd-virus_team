@@ -67,9 +67,6 @@ public class Product {
         this.name = name;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
 
     public void setAvailibility(String availibility) {
         this.availibility = availibility;
