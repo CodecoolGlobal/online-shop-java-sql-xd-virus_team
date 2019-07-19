@@ -72,25 +72,28 @@ public class CustomerController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter products name: ");
         System.out.println(">>");
-        String productName = scanner.nextLine();
+        String userInput = scanner.nextLine();
+        for (Product product : pD.readContent()) {
+            if (product.getName().equals(userInput)) {
+                Product product1 = pD.getByName(userInput);
+                if (product1.getName().equals(userInput)) {
+                    System.out.println("Enter quantity: ");
+                    int productAmount = scanner.nextInt();
+                    if (product1.getAmount() >= productAmount) {
+                        Basket basket = new Basket(product1.getId(), productAmount);
+                        bD.createContent(basket);
+                        System.out.println("Product added");
+                        mainMenuController();
 
-        Product product = pD.getByName(productName);
-        if (product.getName().equals(productName)) {
-            System.out.println("Enter quantity: ");
-            int productAmount = scanner.nextInt();
-            if (product.getAmount() >= productAmount) {
-                Basket basket = new Basket(product.getId(), productAmount);
-                bD.createContent(basket);
-                System.out.println("Product added");
-                mainMenuController();
-
-            }else{
-                System.out.println("There is not enough items in stock");
+                    } else {
+                        System.out.println("There is not enough items in stock");
+                        mainMenuController();
+                    }
+                }
+                } else {
+                System.out.println("There is no such item in warehouse");
                 mainMenuController();
             }
-        }else{
-            System.out.println("There is no such item in warehouse");
-            mainMenuController();
         }
 
 
@@ -252,7 +255,8 @@ public class CustomerController {
         view.addProdToBasket();
         addProductToBasketMenu();
     }
-    public void changeOrderStatus(){
+
+    public void changeOrderStatus() {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter products name: ");
@@ -265,13 +269,13 @@ public class CustomerController {
 
         int productAmountInBasket = prodInbasket.getQuantity_of_product();
 
-        if(product.getAmount()>=productAmountInBasket) {
+        if (product.getAmount() >= productAmountInBasket) {
             product.setAmount(product.getAmount() - productAmountInBasket);
             pD.updateContent(product);
             prodInbasket.setStatus("Paid");
             bD.updateContent(prodInbasket);
 
-        }else{
+        } else {
             System.out.println("Not enough items in stock, to place order. Change items quantity.");
         }
 
